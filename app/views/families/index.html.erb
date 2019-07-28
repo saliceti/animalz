@@ -1,0 +1,15 @@
+
+<h1>Listing families</h1>
+
+<table>
+  <% @families.each do |family| %>
+    <tr>
+      <td><%= link_to family.name, family_path(family) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>
+      <%= link_to 'Add new family...', new_family_path %>
+    </td>
+  </tr>
+</table>

@@ -1,8 +1,5 @@
 
-<h1>Listing animals</h1>
-
-
-<%= link_to 'New animal', new_animal_path %>
+<h1>All animals</h1>
 
 <table>
   <tr>
@@ -12,9 +9,9 @@
 
   <% @animals.each do |animal| %>
     <tr>
-      <td><%= animal.name %></td>
-      <td><%= link_to 'Show', animal_path(animal) %></td>
-      <td><%= link_to 'Delete', animal_path(animal), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to animal.name, animal_path(animal) %></td>
     </tr>
   <% end %>
 </table>
+
+<%= link_to 'New animal...', new_animal_path %>

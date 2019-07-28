@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2019_07_13_114808) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "animal_id"
-    t.index ["animal_id"], name: "index_animals_on_animal_id"
+    t.integer "family_id"
+    t.index ["family_id"], name: "index_animals_on_family_id"
   end
 
   create_table "families", force: :cascade do |t|

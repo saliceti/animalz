@@ -1,0 +1,13 @@
+<h1>Edit Family</h1>
+
+
+<%= form_with model: @family, local: true do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

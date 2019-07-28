@@ -1,7 +1,11 @@
+<h1> <%= @animal.name %> </h1>
 
 <p>
-  <strong>Name:</strong>
-  <%= @animal.name %>
+  Family: <%= link_to @family.name, family_path(@family) %>
 </p>
-
-<%= link_to 'Back', animals_path %>
+<p>
+  <%= link_to 'Edit...', edit_animal_path(@animal) %>
+</p>
+<p>
+  <%= link_to 'Delete...', animal_path(@animal), method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
