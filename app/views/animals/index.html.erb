@@ -2,11 +2,6 @@
 <h1>All animals</h1>
 
 <table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-  </tr>
-
   <% @animals.each do |animal| %>
     <tr>
       <td><%= link_to animal.name, animal_path(animal) %></td>
@@ -14,4 +9,4 @@
   <% end %>
 </table>
 
-<%= link_to 'New animal...', new_animal_path %>
+<%= link_to 'Add new animal...', new_animal_path %>
