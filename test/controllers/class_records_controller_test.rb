@@ -23,6 +23,14 @@ class ClassRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to class_record_url(ClassRecord.last)
   end
 
+  test "should not create class_record if has no name" do
+    assert_no_difference('ClassRecord.count') do
+      post class_records_url, params: { class_record: { description: @class_record.description, name: "", phylum_record_id: @class_record.phylum_record_id } }
+    end
+
+    assert_response(:success)
+  end
+
   test "should show class_record" do
     get class_record_url(@class_record)
     assert_response :success

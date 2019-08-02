@@ -23,6 +23,14 @@ class PhylumRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to phylum_record_url(PhylumRecord.last)
   end
 
+  test "should not create phylum_record if has no name" do
+    assert_no_difference('PhylumRecord.count') do
+      post phylum_records_url, params: { phylum_record: { description: @phylum_record.description, name: "" } }
+    end
+
+    assert_response(:success)
+  end
+
   test "should show phylum_record" do
     get phylum_record_url(@phylum_record)
     assert_response :success

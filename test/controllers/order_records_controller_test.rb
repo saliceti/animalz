@@ -23,6 +23,14 @@ class OrderRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to order_record_url(OrderRecord.last)
   end
 
+  test "should not create order_record if has no name" do
+    assert_no_difference('OrderRecord.count') do
+      post order_records_url, params: { order_record: { description: @order_record.description, name: "", class_record_id: @order_record.class_record_id } }
+    end
+
+    assert_response(:success)
+  end
+
   test "should show order_record" do
     get order_record_url(@order_record)
     assert_response :success

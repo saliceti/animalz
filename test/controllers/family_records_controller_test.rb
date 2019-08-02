@@ -23,6 +23,14 @@ class FamilyRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to family_record_url(FamilyRecord.last)
   end
 
+  test "should not create family_record if has no name" do
+    assert_no_difference('FamilyRecord.count') do
+      post family_records_url, params: { family_record: { description: @family_record.description, name: "", order_record_id: @family_record.order_record_id } }
+    end
+
+    assert_response(:success)
+  end
+
   test "should show family_record" do
     get family_record_url(@family_record)
     assert_response :success

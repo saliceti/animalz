@@ -23,6 +23,14 @@ class GenusRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to genus_record_url(GenusRecord.last)
   end
 
+  test "should not create genus_record if has no name" do
+    assert_no_difference('GenusRecord.count') do
+      post genus_records_url, params: { genus_record: { description: @genus_record.description, name: "", family_record_id: @genus_record.family_record_id } }
+    end
+
+    assert_response(:success)
+  end
+
   test "should show genus_record" do
     get genus_record_url(@genus_record)
     assert_response :success
