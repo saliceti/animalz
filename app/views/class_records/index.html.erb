@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Class Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Phylum record</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @class_records.each do |class_record| %>
+      <tr>
+        <td><%= class_record.name %></td>
+        <td><%= class_record.description %></td>
+        <td><%= class_record.phylum_record %></td>
+        <td><%= link_to 'Show', class_record %></td>
+        <td><%= link_to 'Edit', edit_class_record_path(class_record) %></td>
+        <td><%= link_to 'Destroy', class_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Class Record', new_class_record_path %>

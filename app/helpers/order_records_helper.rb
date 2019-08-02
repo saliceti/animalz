@@ -1,0 +1,2 @@
+module OrderRecordsHelper
+end

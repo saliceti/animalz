@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @family_record.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @family_record.description %>
+</p>
+
+<p>
+  <strong>Order record:</strong>
+  <%= @family_record.order_record %>
+</p>
+
+<%= link_to 'Edit', edit_family_record_path(@family_record) %> |
+<%= link_to 'Back', family_records_path %>

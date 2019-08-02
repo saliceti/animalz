@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @phylum_record.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @phylum_record.description %>
+</p>
+
+<%= link_to 'Edit', edit_phylum_record_path(@phylum_record) %> |
+<%= link_to 'Back', phylum_records_path %>

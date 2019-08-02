@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @genus_record.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @genus_record.description %>
+</p>
+
+<p>
+  <strong>Family record:</strong>
+  <%= @genus_record.family_record %>
+</p>
+
+<%= link_to 'Edit', edit_genus_record_path(@genus_record) %> |
+<%= link_to 'Back', genus_records_path %>

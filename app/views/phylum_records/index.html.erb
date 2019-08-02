@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Phylum Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @phylum_records.each do |phylum_record| %>
+      <tr>
+        <td><%= phylum_record.name %></td>
+        <td><%= phylum_record.description %></td>
+        <td><%= link_to 'Show', phylum_record %></td>
+        <td><%= link_to 'Edit', edit_phylum_record_path(phylum_record) %></td>
+        <td><%= link_to 'Destroy', phylum_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Phylum Record', new_phylum_record_path %>

@@ -1,0 +1,32 @@
+<%= form_with(model: genus_record, local: true) do |form| %>
+  <% if genus_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(genus_record.errors.count, "error") %> prohibited this genus_record from being saved:</h2>
+
+      <ul>
+      <% genus_record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :family_record_id %>
+    <%= form.text_field :family_record_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

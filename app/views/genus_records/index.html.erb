@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Genus Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Family record</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @genus_records.each do |genus_record| %>
+      <tr>
+        <td><%= genus_record.name %></td>
+        <td><%= genus_record.description %></td>
+        <td><%= genus_record.family_record %></td>
+        <td><%= link_to 'Show', genus_record %></td>
+        <td><%= link_to 'Edit', edit_genus_record_path(genus_record) %></td>
+        <td><%= link_to 'Destroy', genus_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Genus Record', new_genus_record_path %>

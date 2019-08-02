@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @species_record.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @species_record.description %>
+</p>
+
+<p>
+  <strong>Genus record:</strong>
+  <%= @species_record.genus_record %>
+</p>
+
+<%= link_to 'Edit', edit_species_record_path(@species_record) %> |
+<%= link_to 'Back', species_records_path %>

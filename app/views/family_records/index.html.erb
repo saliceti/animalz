@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Family Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Order record</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @family_records.each do |family_record| %>
+      <tr>
+        <td><%= family_record.name %></td>
+        <td><%= family_record.description %></td>
+        <td><%= family_record.order_record %></td>
+        <td><%= link_to 'Show', family_record %></td>
+        <td><%= link_to 'Edit', edit_family_record_path(family_record) %></td>
+        <td><%= link_to 'Destroy', family_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Family Record', new_family_record_path %>
