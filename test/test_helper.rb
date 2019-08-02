@@ -7,4 +7,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def assert_form_contains_list_of model_class
+    list_for_options = model_class.all.map{|p| p.name}
+    assert_select 'option' do |options|
+      options.each do |option|
+        assert list_for_options.include?(option.child.to_s)
+      end
+    end
+  end
 end

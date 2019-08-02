@@ -15,10 +15,12 @@ class SpeciesRecordsController < ApplicationController
   # GET /species_records/new
   def new
     @species_record = SpeciesRecord.new
+    prepare_form
   end
 
   # GET /species_records/1/edit
   def edit
+    prepare_form
   end
 
   # POST /species_records
@@ -31,6 +33,7 @@ class SpeciesRecordsController < ApplicationController
         format.html { redirect_to @species_record, notice: 'Species record was successfully created.' }
         format.json { render :show, status: :created, location: @species_record }
       else
+        prepare_form
         format.html { render :new }
         format.json { render json: @species_record.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class SpeciesRecordsController < ApplicationController
         format.html { redirect_to @species_record, notice: 'Species record was successfully updated.' }
         format.json { render :show, status: :ok, location: @species_record }
       else
+        prepare_form
         format.html { render :edit }
         format.json { render json: @species_record.errors, status: :unprocessable_entity }
       end
@@ -70,5 +74,9 @@ class SpeciesRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def species_record_params
       params.require(:species_record).permit(:name, :description, :genus_record_id)
+    end
+
+    def prepare_form
+      @genus_list = GenusRecord.all
     end
 end

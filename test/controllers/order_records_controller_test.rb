@@ -13,6 +13,7 @@ class OrderRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_order_record_url
     assert_response :success
+    assert_form_contains_list_of ClassRecord
   end
 
   test "should create order_record" do
@@ -44,6 +45,13 @@ class OrderRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should update order_record" do
     patch order_record_url(@order_record), params: { order_record: { class_record_id: @order_record.class_record_id, description: @order_record.description, name: @order_record.name } }
     assert_redirected_to order_record_url(@order_record)
+  end
+
+  test "should not update order_record if has no name" do
+    patch order_record_url(@order_record), params: { order_record: { description: @order_record.description, name: "", class_record_id: @order_record.class_record_id } }
+    assert @response.body.include?('Editing Order Record')
+    assert_response(:success)
+    assert_form_contains_list_of ClassRecord
   end
 
   test "should not destroy order_record if has family" do

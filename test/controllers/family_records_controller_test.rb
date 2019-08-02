@@ -12,6 +12,7 @@ class FamilyRecordsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new" do
     get new_family_record_url
+    assert_form_contains_list_of OrderRecord
     assert_response :success
   end
 
@@ -38,6 +39,7 @@ class FamilyRecordsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     get edit_family_record_url(@family_record)
+    assert_form_contains_list_of OrderRecord
     assert_response :success
   end
 
@@ -45,6 +47,12 @@ class FamilyRecordsControllerTest < ActionDispatch::IntegrationTest
     patch family_record_url(@family_record), params: { family_record: { description: @family_record.description, name: @family_record.name, order_record_id: @family_record.order_record_id } }
     assert_redirected_to family_record_url(@family_record)
   end
+
+  test "should not update family_record if has no name" do
+    patch family_record_url(@family_record), params: { family_record: { description: @family_record.description, name: "", order_record_id: @family_record.order_record_id } }
+    assert @response.body.include?('Editing Family Record')
+    assert_response(:success)
+    assert_form_contains_list_of OrderRecord  end
 
   test "should not destroy family_record if has genus" do
     assert_no_difference('FamilyRecord.count') do

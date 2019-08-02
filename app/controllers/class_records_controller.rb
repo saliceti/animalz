@@ -15,22 +15,25 @@ class ClassRecordsController < ApplicationController
   # GET /class_records/new
   def new
     @class_record = ClassRecord.new
+    prepare_form
+    render status: 500 if @phylum_list.empty?
   end
 
   # GET /class_records/1/edit
   def edit
+    prepare_form
   end
 
   # POST /class_records
   # POST /class_records.json
   def create
     @class_record = ClassRecord.new(class_record_params)
-
     respond_to do |format|
       if @class_record.save
         format.html { redirect_to @class_record, notice: 'Class record was successfully created.' }
         format.json { render :show, status: :created, location: @class_record }
       else
+        prepare_form
         format.html { render :new }
         format.json { render json: @class_record.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class ClassRecordsController < ApplicationController
         format.html { redirect_to @class_record, notice: 'Class record was successfully updated.' }
         format.json { render :show, status: :ok, location: @class_record }
       else
+        prepare_form
         format.html { render :edit }
         format.json { render json: @class_record.errors, status: :unprocessable_entity }
       end
@@ -70,5 +74,9 @@ class ClassRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def class_record_params
       params.require(:class_record).permit(:name, :description, :phylum_record_id)
+    end
+
+    def prepare_form
+      @phylum_list = PhylumRecord.all
     end
 end

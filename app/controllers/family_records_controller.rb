@@ -15,10 +15,12 @@ class FamilyRecordsController < ApplicationController
   # GET /family_records/new
   def new
     @family_record = FamilyRecord.new
+    prepare_form
   end
 
   # GET /family_records/1/edit
   def edit
+    prepare_form
   end
 
   # POST /family_records
@@ -31,6 +33,7 @@ class FamilyRecordsController < ApplicationController
         format.html { redirect_to @family_record, notice: 'Family record was successfully created.' }
         format.json { render :show, status: :created, location: @family_record }
       else
+        prepare_form
         format.html { render :new }
         format.json { render json: @family_record.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class FamilyRecordsController < ApplicationController
         format.html { redirect_to @family_record, notice: 'Family record was successfully updated.' }
         format.json { render :show, status: :ok, location: @family_record }
       else
+        prepare_form
         format.html { render :edit }
         format.json { render json: @family_record.errors, status: :unprocessable_entity }
       end
@@ -70,5 +74,9 @@ class FamilyRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def family_record_params
       params.require(:family_record).permit(:name, :description, :order_record_id)
+    end
+
+    def prepare_form
+      @order_list = OrderRecord.all
     end
 end

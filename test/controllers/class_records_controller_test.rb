@@ -13,6 +13,19 @@ class ClassRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_class_record_url
     assert_response :success
+    assert_form_contains_list_of PhylumRecord
+  end
+
+  test "should fail for new if no phylum" do
+    SpeciesRecord.delete_all
+    GenusRecord.delete_all
+    FamilyRecord.delete_all
+    OrderRecord.delete_all
+    ClassRecord.delete_all
+    PhylumRecord.delete_all
+    get new_class_record_url
+
+    assert_response(:error)
   end
 
   test "should create class_record" do
@@ -39,11 +52,19 @@ class ClassRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_class_record_url(@class_record)
     assert_response :success
+    assert_form_contains_list_of PhylumRecord
   end
 
   test "should update class_record" do
     patch class_record_url(@class_record), params: { class_record: { description: @class_record.description, name: @class_record.name, phylum_record_id: @class_record.phylum_record_id } }
     assert_redirected_to class_record_url(@class_record)
+  end
+
+  test "should not update class_record if has no name" do
+    patch class_record_url(@class_record), params: { class_record: { description: @class_record.description, name: "", phylum_record_id: @class_record.phylum_record_id } }
+    assert @response.body.include?('Editing Class Record')
+    assert_response(:success)
+    assert_form_contains_list_of PhylumRecord
   end
 
   test "should not destroy class_record if has order" do

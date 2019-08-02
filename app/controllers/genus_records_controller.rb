@@ -15,10 +15,12 @@ class GenusRecordsController < ApplicationController
   # GET /genus_records/new
   def new
     @genus_record = GenusRecord.new
+    prepare_form
   end
 
   # GET /genus_records/1/edit
   def edit
+    prepare_form
   end
 
   # POST /genus_records
@@ -31,6 +33,7 @@ class GenusRecordsController < ApplicationController
         format.html { redirect_to @genus_record, notice: 'Genus record was successfully created.' }
         format.json { render :show, status: :created, location: @genus_record }
       else
+        prepare_form
         format.html { render :new }
         format.json { render json: @genus_record.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class GenusRecordsController < ApplicationController
         format.html { redirect_to @genus_record, notice: 'Genus record was successfully updated.' }
         format.json { render :show, status: :ok, location: @genus_record }
       else
+        prepare_form
         format.html { render :edit }
         format.json { render json: @genus_record.errors, status: :unprocessable_entity }
       end
@@ -70,5 +74,9 @@ class GenusRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def genus_record_params
       params.require(:genus_record).permit(:name, :description, :family_record_id)
+    end
+
+    def prepare_form
+      @family_list = FamilyRecord.all
     end
 end

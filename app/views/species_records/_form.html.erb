@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :genus_record_id %>
-    <%= form.text_field :genus_record_id %>
+    <%= form.collection_select(:genus_record_id, @genus_list, :id, :name) %>
   </div>
 
   <div class="actions">

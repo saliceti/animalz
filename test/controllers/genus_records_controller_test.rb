@@ -13,6 +13,7 @@ class GenusRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_genus_record_url
     assert_response :success
+    assert_form_contains_list_of FamilyRecord
   end
 
   test "should create genus_record" do
@@ -39,11 +40,19 @@ class GenusRecordsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_genus_record_url(@genus_record)
     assert_response :success
+    assert_form_contains_list_of FamilyRecord
   end
 
   test "should update genus_record" do
     patch genus_record_url(@genus_record), params: { genus_record: { description: @genus_record.description, family_record_id: @genus_record.family_record_id, name: @genus_record.name } }
     assert_redirected_to genus_record_url(@genus_record)
+  end
+
+  test "should not update genus_record if has no name" do
+    patch genus_record_url(@genus_record), params: { genus_record: { description: @genus_record.description, family_record_id: @genus_record.family_record_id, name: "" } }
+    assert @response.body.include?('Editing Genus Record')
+    assert_response(:success)
+    assert_form_contains_list_of FamilyRecord
   end
 
   test "should not destroy genus_record if has species" do

@@ -15,10 +15,12 @@ class OrderRecordsController < ApplicationController
   # GET /order_records/new
   def new
     @order_record = OrderRecord.new
+    prepare_form
   end
 
   # GET /order_records/1/edit
   def edit
+    prepare_form
   end
 
   # POST /order_records
@@ -31,6 +33,7 @@ class OrderRecordsController < ApplicationController
         format.html { redirect_to @order_record, notice: 'Order record was successfully created.' }
         format.json { render :show, status: :created, location: @order_record }
       else
+        prepare_form
         format.html { render :new }
         format.json { render json: @order_record.errors, status: :unprocessable_entity }
       end
@@ -45,6 +48,7 @@ class OrderRecordsController < ApplicationController
         format.html { redirect_to @order_record, notice: 'Order record was successfully updated.' }
         format.json { render :show, status: :ok, location: @order_record }
       else
+        prepare_form
         format.html { render :edit }
         format.json { render json: @order_record.errors, status: :unprocessable_entity }
       end
@@ -70,5 +74,9 @@ class OrderRecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_record_params
       params.require(:order_record).permit(:name, :description, :class_record_id)
+    end
+
+    def prepare_form
+      @class_list = ClassRecord.all
     end
 end

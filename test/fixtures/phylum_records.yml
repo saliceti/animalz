@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Phylum_one
   description: MyString
 
 two:
-  name: MyString
+  name: Phylum_two
   description: MyString
 
 phylum_with_no_class:
-  name: MyString
+  name: Phylum_with_no_class
   description: MyString
