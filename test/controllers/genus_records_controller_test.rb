@@ -38,9 +38,18 @@ class GenusRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to genus_record_url(@genus_record)
   end
 
-  test "should destroy genus_record" do
-    assert_difference('GenusRecord.count', -1) do
+  test "should not destroy genus_record if has species" do
+    assert_no_difference('GenusRecord.count') do
       delete genus_record_url(@genus_record)
+    end
+
+    assert_redirected_to genus_records_url
+  end
+
+  test "should destroy genus_record if empty" do
+    genus_record_with_no_species = genus_records(:genus_record_with_no_species)
+    assert_difference('GenusRecord.count', -1) do
+      delete genus_record_url(genus_record_with_no_species)
     end
 
     assert_redirected_to genus_records_url

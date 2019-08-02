@@ -38,9 +38,18 @@ class PhylumRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to phylum_record_url(@phylum_record)
   end
 
-  test "should destroy phylum_record" do
-    assert_difference('PhylumRecord.count', -1) do
+  test "should not destroy phylum_record if has class" do
+    assert_no_difference('PhylumRecord.count') do
       delete phylum_record_url(@phylum_record)
+    end
+
+    assert_redirected_to phylum_records_url
+  end
+
+  test "should destroy phylum_record if has no class" do
+    phylum_with_no_class = phylum_records(:phylum_with_no_class)
+    assert_difference('PhylumRecord.count', -1) do
+      delete phylum_record_url(phylum_with_no_class)
     end
 
     assert_redirected_to phylum_records_url

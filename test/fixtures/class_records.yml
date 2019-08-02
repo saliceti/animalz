@@ -9,3 +9,8 @@ two:
   name: MyString
   description: MyString
   phylum_record: two
+
+class_with_no_order:
+  name: MyString
+  description: MyString
+  phylum_record: two

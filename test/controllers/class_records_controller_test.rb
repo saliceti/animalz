@@ -38,9 +38,18 @@ class ClassRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to class_record_url(@class_record)
   end
 
-  test "should destroy class_record" do
-    assert_difference('ClassRecord.count', -1) do
+  test "should not destroy class_record if has order" do
+    assert_no_difference('ClassRecord.count') do
       delete class_record_url(@class_record)
+    end
+
+    assert_redirected_to class_records_url
+  end
+
+  test "should destroy class_record if has order" do
+    class_with_no_order = class_records(:class_with_no_order)
+    assert_difference('ClassRecord.count', -1) do
+      delete class_record_url(class_with_no_order)
     end
 
     assert_redirected_to class_records_url

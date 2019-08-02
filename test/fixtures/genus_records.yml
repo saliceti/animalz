@@ -9,3 +9,8 @@ two:
   name: MyString
   description: MyString
   family_record: two
+
+genus_record_with_no_species:
+  name: MyString
+  description: MyString
+  family_record: two

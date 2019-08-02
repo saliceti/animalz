@@ -38,9 +38,18 @@ class OrderRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to order_record_url(@order_record)
   end
 
-  test "should destroy order_record" do
-    assert_difference('OrderRecord.count', -1) do
+  test "should not destroy order_record if has family" do
+    assert_no_difference('OrderRecord.count') do
       delete order_record_url(@order_record)
+    end
+
+    assert_redirected_to order_records_url
+  end
+
+  test "should destroy order_record if has no family" do
+    order_with_no_family = order_records(:order_with_no_family)
+    assert_difference('OrderRecord.count', -1) do
+      delete order_record_url(order_with_no_family)
     end
 
     assert_redirected_to order_records_url

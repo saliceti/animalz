@@ -9,3 +9,8 @@ two:
   name: MyString
   description: MyString
   class_record: two
+
+order_with_no_family:
+  name: MyString
+  description: MyString
+  class_record: two

@@ -38,9 +38,18 @@ class FamilyRecordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to family_record_url(@family_record)
   end
 
-  test "should destroy family_record" do
-    assert_difference('FamilyRecord.count', -1) do
+  test "should not destroy family_record if has genus" do
+    assert_no_difference('FamilyRecord.count') do
       delete family_record_url(@family_record)
+    end
+
+    assert_redirected_to family_records_url
+  end
+
+  test "should destroy family_record if has no genus" do
+    family_with_no_genus = family_records(:family_with_no_genus)
+    assert_difference('FamilyRecord.count', -1) do
+      delete family_record_url(family_with_no_genus)
     end
 
     assert_redirected_to family_records_url
