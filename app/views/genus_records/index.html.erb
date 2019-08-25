@@ -17,7 +17,7 @@
       <tr>
         <td><%= genus_record.name %></td>
         <td><%= genus_record.description %></td>
-        <td><%= genus_record.family_record %></td>
+        <td><%= genus_record.family_record.name %></td>
         <td><%= link_to 'Show', genus_record %></td>
         <td><%= link_to 'Edit', edit_genus_record_path(genus_record) %></td>
         <td><%= link_to 'Destroy', genus_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>

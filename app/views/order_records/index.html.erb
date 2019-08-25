@@ -17,7 +17,7 @@
       <tr>
         <td><%= order_record.name %></td>
         <td><%= order_record.description %></td>
-        <td><%= order_record.class_record %></td>
+        <td><%= order_record.class_record.name %></td>
         <td><%= link_to 'Show', order_record %></td>
         <td><%= link_to 'Edit', edit_order_record_path(order_record) %></td>
         <td><%= link_to 'Destroy', order_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>

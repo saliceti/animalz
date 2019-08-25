@@ -17,7 +17,7 @@
       <tr>
         <td><%= class_record.name %></td>
         <td><%= class_record.description %></td>
-        <td><%= class_record.phylum_record %></td>
+        <td><%= class_record.phylum_record.name %></td>
         <td><%= link_to 'Show', class_record %></td>
         <td><%= link_to 'Edit', edit_class_record_path(class_record) %></td>
         <td><%= link_to 'Destroy', class_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>

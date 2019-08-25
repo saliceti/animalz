@@ -17,7 +17,7 @@
       <tr>
         <td><%= family_record.name %></td>
         <td><%= family_record.description %></td>
-        <td><%= family_record.order_record %></td>
+        <td><%= family_record.order_record.name %></td>
         <td><%= link_to 'Show', family_record %></td>
         <td><%= link_to 'Edit', edit_family_record_path(family_record) %></td>
         <td><%= link_to 'Destroy', family_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>

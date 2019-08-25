@@ -17,7 +17,7 @@
       <tr>
         <td><%= species_record.name %></td>
         <td><%= species_record.description %></td>
-        <td><%= species_record.genus_record %></td>
+        <td><%= species_record.genus_record.name %></td>
         <td><%= link_to 'Show', species_record %></td>
         <td><%= link_to 'Edit', edit_species_record_path(species_record) %></td>
         <td><%= link_to 'Destroy', species_record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
