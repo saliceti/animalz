@@ -1,0 +1,28 @@
+<h1>Create new taxon</h1>
+
+<%= form_with model: @taxon do |form| %>
+
+  <div class="field">
+    <%= form.label :common_name %>
+    <%= form.text_field :common_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :scientific_name %>
+    <%= form.text_field :scientific_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rank %>
+    <%= form.select(:rank, Taxon::RANKS, :include_blank => "") %>
+  </div>
+
+  <div class="field">
+    <%= form.label :parent_id %>
+    <%= form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, :include_blank => "") %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
