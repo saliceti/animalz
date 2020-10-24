@@ -6,6 +6,11 @@ feature 'Taxon CRUD' do
     when_a_user_creates_a_child_taxon
     then_the_new_taxon_is_displayed
   end
+  scenario 'List taxons' do
+    given_a_taxon_already_exists
+    when_a_user_visits_the_taxon_index
+    then_the_new_taxon_is_listed
+  end
 end
 
 def given_a_taxon_already_exists
@@ -30,4 +35,12 @@ def then_the_new_taxon_is_displayed
   expect(page).to have_text 'Rank: Class'
   expect(page).to have_text 'Common name: Mammals'
   expect(page).to have_text 'Scientific name: Mammalia'
+end
+
+def when_a_user_visits_the_taxon_index
+  visit taxons_path
+end
+
+def then_the_new_taxon_is_listed
+  expect(page).to have_text 'Chordates'
 end

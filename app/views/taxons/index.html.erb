@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<h1>All taxons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Common name</th>
+      <th>Scientific name</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @taxons.each do |taxon| %>
+      <tr>
+        <td><%= taxon.common_name %></td>
+        <td><%= taxon.scientific_name %></td>
+        <td><%= taxon.rank %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,6 +1,10 @@
 class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @taxons = Taxon.all
+  end
+
   def show
   end
 
