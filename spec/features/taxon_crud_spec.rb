@@ -18,6 +18,12 @@ feature 'Taxon CRUD' do
     then_the_user_is_redirected_to_the_show_view_of_id(1)
     then_the_new_value_is_displayed
   end
+  scenario 'Delete taxon' do
+    given_a_taxon_already_exists
+    when_a_user_deletes_the_taxon
+    then_the_user_is_redirected_to_the_index
+    and_the_taxon_is_not_there
+  end
 end
 
 def given_a_taxon_already_exists
@@ -66,4 +72,25 @@ end
 def then_the_new_value_is_displayed
   expect(page).to have_text 'Taxon was successfully updated'
   expect(page).to have_text 'Common name: Chordates-NEW'
+end
+
+def when_a_user_deletes_the_taxon
+  cbdriver.delete taxon_path(1)
+end
+
+def then_the_user_is_redirected_to_the_index
+  expect(cbdriver.response).to be_redirect
+  visit cbdriver.response.location
+
+  expect(current_path).to eq(taxons_path)
+end
+
+def and_the_taxon_is_not_there
+  expect(page).not_to have_text 'Chordates'
+end
+
+private
+
+def cbdriver
+  Capybara.current_session.driver
 end

@@ -38,6 +38,13 @@ class TaxonsController < ApplicationController
     end
   end
 
+  def destroy
+    @taxon.destroy
+    respond_to do |format|
+      format.html { redirect_to taxons_path, notice: 'Taxon was successfully destroyed.' }
+    end
+  end
+
   private
 
   def set_taxon
