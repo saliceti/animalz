@@ -13,6 +13,10 @@ class TaxonsController < ApplicationController
     @taxon = Taxon.new
   end
 
+  def edit
+    @taxons = Taxon.all
+  end
+
   def create
     @taxon = Taxon.new(taxon_params)
     respond_to do |format|
@@ -20,6 +24,16 @@ class TaxonsController < ApplicationController
         format.html { redirect_to @taxon, notice: 'Taxon was successfully created.' }
       else
         format.html { render :new }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @taxon.update(taxon_params)
+        format.html { redirect_to @taxon, notice: 'Taxon was successfully updated.' }
+      else
+        format.html { render :edit }
       end
     end
   end

@@ -4,13 +4,19 @@ feature 'Taxon CRUD' do
   scenario 'Create a new taxon' do
     given_a_taxon_already_exists
     when_a_user_creates_a_child_taxon
-    then_the_user_is_redirected_to_the_show_view
+    then_the_user_is_redirected_to_the_show_view_of_id(2)
     and_the_new_taxon_is_displayed
   end
   scenario 'List taxons' do
     given_a_taxon_already_exists
     when_a_user_visits_the_taxon_index
     then_the_new_taxon_is_listed
+  end
+  scenario 'Update taxon' do
+    given_a_taxon_already_exists
+    when_a_user_edits_the_taxon
+    then_the_user_is_redirected_to_the_show_view_of_id(1)
+    then_the_new_value_is_displayed
   end
 end
 
@@ -31,8 +37,8 @@ def when_a_user_creates_a_child_taxon
   click_button('commit')
 end
 
-def then_the_user_is_redirected_to_the_show_view
-  expect(current_path).to eq(taxon_path(2))
+def then_the_user_is_redirected_to_the_show_view_of_id(taxon_id)
+  expect(current_path).to eq(taxon_path(taxon_id))
 end
 
 def and_the_new_taxon_is_displayed
@@ -48,4 +54,16 @@ end
 
 def then_the_new_taxon_is_listed
   expect(page).to have_text 'Chordates'
+end
+
+def when_a_user_edits_the_taxon
+  visit edit_taxon_path(1)
+  expect(page).to have_field('taxon_common_name', type: 'text', with: 'Chordates')
+  fill_in 'Common name', with: 'Chordates-NEW'
+  click_button('commit')
+end
+
+def then_the_new_value_is_displayed
+  expect(page).to have_text 'Taxon was successfully updated'
+  expect(page).to have_text 'Common name: Chordates-NEW'
 end
