@@ -4,7 +4,8 @@ feature 'Taxon CRUD' do
   scenario 'Create a new taxon' do
     given_a_taxon_already_exists
     when_a_user_creates_a_child_taxon
-    then_the_new_taxon_is_displayed
+    then_the_user_is_redirected_to_the_show_view
+    and_the_new_taxon_is_displayed
   end
   scenario 'List taxons' do
     given_a_taxon_already_exists
@@ -30,7 +31,11 @@ def when_a_user_creates_a_child_taxon
   click_button('commit')
 end
 
-def then_the_new_taxon_is_displayed
+def then_the_user_is_redirected_to_the_show_view
+  expect(current_path).to eq(taxon_path(2))
+end
+
+def and_the_new_taxon_is_displayed
   expect(page).to have_text 'Taxon was successfully created'
   expect(page).to have_text 'Rank: Class'
   expect(page).to have_text 'Common name: Mammals'
