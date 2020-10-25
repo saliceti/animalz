@@ -29,7 +29,7 @@ end
 def given_a_taxon_already_exists
   chordata = Taxon.create(rank: 'Phylum', common_name: 'Chordates', scientific_name: 'Chordata')
   chordata.save
-  expect(Taxon.any?).to be_truthy
+  expect(Taxon.any?).to be true
 end
 
 def when_a_user_creates_a_child_taxon

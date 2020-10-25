@@ -1,5 +1,5 @@
 class Taxon < ApplicationRecord
-  has_one :parent, class_name: "Taxon"
+  belongs_to :parent, class_name: "Taxon", optional: true
 
   RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
 
