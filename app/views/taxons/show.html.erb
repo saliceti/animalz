@@ -2,7 +2,7 @@
 
 <p>
   <strong>Rank:</strong>
-  <%= @taxon.rank %>
+  <%= link_to @taxon.rank, taxons_path(rank: @taxon.rank) %>
 </p>
 
 <p>

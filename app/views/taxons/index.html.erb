@@ -15,8 +15,8 @@
   <tbody>
     <% @taxons.each do |taxon| %>
       <tr>
-        <td><%= taxon.common_name %></td>
-        <td><%= taxon.scientific_name %></td>
+        <td><%= link_to taxon.common_name, taxon %></td>
+        <td><%= link_to taxon.scientific_name, taxon %></td>
         <td><%= taxon.rank %></td>
         <td><%= link_to 'Destroy', taxon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

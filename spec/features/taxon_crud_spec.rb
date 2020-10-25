@@ -49,7 +49,7 @@ end
 
 def and_the_new_taxon_is_displayed
   expect(page).to have_text 'Taxon was successfully created'
-  expect(page).to have_text 'Rank: Class'
+  expect(page).to have_link('Class', href: taxons_path(rank: 'Class'))
   expect(page).to have_text 'Common name: Mammals'
   expect(page).to have_text 'Scientific name: Mammalia'
 end
@@ -59,7 +59,8 @@ def when_a_user_visits_the_taxon_index
 end
 
 def then_the_new_taxon_is_listed
-  expect(page).to have_text 'Chordates'
+  expect(page).to have_link('Chordates', href: taxon_path(1))
+  expect(page).to have_link('Chordata', href: taxon_path(1))
 end
 
 def when_a_user_edits_the_taxon
