@@ -2,7 +2,13 @@ class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
 
   def index
-    @taxons = Taxon.all
+    if params[:rank]
+      @taxons = Taxon.select_rank(params[:rank])
+      @page_title = "#{params[:rank]} list"
+    else
+      @taxons = Taxon.all
+      @page_title = "All taxons"
+    end
   end
 
   def show
