@@ -10,6 +10,15 @@
   </head>
 
   <body>
+    <div class="header">
+    <%= link_to image_tag('fox_logo.png', class: 'logo'), root_path %>
+    </div>
+
+    <div class="menu">
+      <%= link_to 'Home', root_path %>
+    </div>
+
+    <hr>
     <%= yield %>
   </body>
 </html>
