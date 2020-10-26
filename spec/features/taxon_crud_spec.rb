@@ -4,8 +4,7 @@ feature 'Taxon CRUD' do
   scenario 'Create a new taxon' do
     given_a_taxon_already_exists
     when_a_user_creates_a_child_taxon
-    then_the_user_is_redirected_to_the_show_view_of_id(2)
-    and_the_new_taxon_is_displayed
+    then_the_new_taxon_is_displayed
   end
   scenario 'List taxons' do
     given_a_taxon_already_exists
@@ -15,7 +14,6 @@ feature 'Taxon CRUD' do
   scenario 'Update taxon' do
     given_a_taxon_already_exists
     when_a_user_edits_the_taxon
-    then_the_user_is_redirected_to_the_show_view_of_id(1)
     then_the_new_value_is_displayed
   end
   scenario 'Delete taxon' do
@@ -43,15 +41,14 @@ def when_a_user_creates_a_child_taxon
   click_button('commit')
 end
 
-def then_the_user_is_redirected_to_the_show_view_of_id(taxon_id)
-  expect(current_path).to eq(taxon_path(taxon_id))
-end
-
-def and_the_new_taxon_is_displayed
+def then_the_new_taxon_is_displayed
   expect(page).to have_text 'Taxon was successfully created'
   expect(page).to have_link('Class', href: taxons_path(rank: 'Class'))
   expect(page).to have_text 'Common name: Mammals'
   expect(page).to have_text 'Scientific name: Mammalia'
+  id = current_path.split('/').last
+  expect(page).to have_link 'Edit', href: edit_taxon_path(id)
+  expect(page).to have_link 'Destroy', href: taxon_path(id)
 end
 
 def when_a_user_visits_the_taxon_index
@@ -59,12 +56,14 @@ def when_a_user_visits_the_taxon_index
 end
 
 def then_the_new_taxon_is_listed
-  expect(page).to have_link('Chordates', href: taxon_path(1))
-  expect(page).to have_link('Chordata', href: taxon_path(1))
+  expect(page).to have_link('Chordates')
+  expect(page).to have_link('Chordata')
 end
 
 def when_a_user_edits_the_taxon
-  visit edit_taxon_path(1)
+  visit taxons_path
+  click_link('Chordates')
+  click_link('Edit')
   expect(page).to have_field('taxon_common_name', type: 'text', with: 'Chordates')
   fill_in 'Common name', with: 'Chordates-NEW'
   click_button('commit')
@@ -76,7 +75,10 @@ def then_the_new_value_is_displayed
 end
 
 def when_a_user_deletes_the_taxon
-  cbdriver.delete taxon_path(1)
+  visit taxons_path
+  click_link('Chordates')
+  id = current_path.split('/').last
+  cbdriver.delete taxon_path(id)
 end
 
 def then_the_user_is_redirected_to_the_index

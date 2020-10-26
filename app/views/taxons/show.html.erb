@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <%= link_to 'Edit', edit_taxon_path %>
+  <%= link_to 'Destroy', @taxon, method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
+
+<p>
   <strong>Rank:</strong>
   <%= link_to @taxon.rank, taxons_path(rank: @taxon.rank) %>
 </p>

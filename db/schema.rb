@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2020_10_24_124155) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "taxons", force: :cascade do |t|
     t.string "rank"
     t.string "common_name"
     t.string "scientific_name"
-    t.integer "parent_id"
+    t.bigint "parent_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_id"], name: "index_taxons_on_parent_id"
