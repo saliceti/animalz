@@ -1,4 +1,9 @@
 require "rails_helper"
+require './spec/support/helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
 
 def scenario_browse_by(rank)
   scenario "By #{rank}" do
@@ -26,15 +31,6 @@ end
 
 def then_the_browse_title_is_displayed
   expect(page).to have_text('Browse all Animons')
-end
-
-def given_a_full_taxon_hierarchy
-  parent_taxon = nil
-  Taxon::RANKS.each do |rank|
-    taxon = Taxon.create(rank: rank, common_name: "#{rank} common name", scientific_name: "#{rank} scientific name", parent: parent_taxon)
-    expect(taxon.save).to be true
-    parent_taxon = taxon
-  end
 end
 
 def and_the_user_clicks_on_rank(rank)
