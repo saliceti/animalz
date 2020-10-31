@@ -1,3 +1,5 @@
 <h1>Editing Taxon</h1>
 
 <%= render 'form', taxon: @taxon %>
+
+<%= link_to 'Add YouTube video', new_youtube_video_path(taxon: @taxon) %>

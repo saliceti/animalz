@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <%= link_to 'Edit', edit_taxon_path %>
+  <%= link_to 'Edit', edit_taxon_path(@taxon) %>
   <%= link_to 'Destroy', @taxon, method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>
 
@@ -19,3 +19,11 @@
   <strong>Scientific name:</strong>
   <%= @taxon.scientific_name %>
 </p>
+
+<p>
+  <strong>Latest YouTube videos:</strong>
+  <% @taxon.youtube_videos.each do |video| %>
+    <%= video.link %>
+  <% end %>
+</p>
+

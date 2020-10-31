@@ -1,5 +1,6 @@
 class Taxon < ApplicationRecord
   belongs_to :parent, class_name: "Taxon", optional: true
+  has_many :youtube_videos
 
   RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
 
