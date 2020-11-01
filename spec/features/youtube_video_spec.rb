@@ -24,7 +24,7 @@ def and_adds_a_video
   click_link('Add YouTube video')
   expect(page).to have_text "Add video to #{@species.common_name}"
   expect(page).to have_field "youtube_video_taxon_id", with: @species.id, type: :hidden
-  @link = 'http://youtube.com/myvideo'
+  @link = 'https://youtu.be/V06FJGSQ3Ug'
   fill_in :youtube_video_link, with: @link
   click_button 'commit'
 end
