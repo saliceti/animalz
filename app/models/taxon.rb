@@ -12,4 +12,12 @@ class Taxon < ApplicationRecord
     raise "Unknown rank '#{rank}'" unless RANKS.include? rank
     Taxon.where(rank: rank)
   end
+
+  def ancestors
+    if parent
+      parent.ancestors + [parent]
+    else
+      []
+    end
+  end
 end

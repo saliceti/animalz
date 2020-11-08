@@ -13,6 +13,7 @@ class TaxonsController < ApplicationController
   end
 
   def show
+    @ancestors = @taxon.ancestors
   end
 
   def new

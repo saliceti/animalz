@@ -21,6 +21,14 @@
 </p>
 
 <p>
+  <strong>Scientific classification:</strong>
+  <% @ancestors.each do |ancestor| %>
+    <%= link_to ancestor.scientific_name, taxon_path(ancestor) %> >
+  <% end %>
+  <%= @taxon.scientific_name %>
+</p>
+
+<p>
   <% unless @taxon.youtube_videos.empty? %>
   <strong>Latest YouTube videos:</strong>
   <% end %>
