@@ -1,6 +1,6 @@
 class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
-  helper_method :embed_link
+  helper_method :embed_link, :parent_taxon
 
   def index
     if params[:rank]
@@ -18,7 +18,8 @@ class TaxonsController < ApplicationController
 
   def new
     @taxons = Taxon.all
-    @taxon = Taxon.new
+    @parent_taxon = Taxon.find(params[:readonly_parent_taxon]) if params[:readonly_parent_taxon]
+    @taxon = Taxon.new(parent: @parent_taxon)
   end
 
   def edit
@@ -54,6 +55,15 @@ class TaxonsController < ApplicationController
   end
 
   private
+
+  def parent_taxon(form)
+    if params[:readonly_parent_taxon]
+      buffer = form.hidden_field :parent_id, :value => @taxon.parent_id
+      buffer << helpers.link_to(@taxon.parent.common_name, taxon_path(@taxon.parent))
+    else
+      form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, :include_blank => "")
+    end
+  end
 
   def embed_link(youtube_id)
     "https://www.youtube.com/embed/#{youtube_id}"

@@ -17,7 +17,7 @@
 
   <div class="field">
     <%= form.label :parent_id %>
-    <%= form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, :include_blank => "") %>
+    <%= parent_taxon(form) %>
   </div>
 
   <div class="actions">
