@@ -29,6 +29,17 @@
 </p>
 
 <p>
+  <% unless @taxon.children.empty? %>
+  <strong>Child taxons:</strong>
+  <ul>
+    <% @taxon.children.each do |taxon| %>
+    <li> <%= link_to taxon.common_name, taxon_path(taxon) %> </li>
+    <% end %>
+  </ul>
+  <% end %>
+</p>
+
+<p>
   <% unless @taxon.youtube_videos.empty? %>
   <strong>Latest YouTube videos:</strong>
   <% end %>
