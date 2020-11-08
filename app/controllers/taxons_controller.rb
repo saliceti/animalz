@@ -1,5 +1,6 @@
 class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
+  helper_method :embed_link
 
   def index
     if params[:rank]
@@ -52,6 +53,10 @@ class TaxonsController < ApplicationController
   end
 
   private
+
+  def embed_link(youtube_id)
+    "https://www.youtube.com/embed/#{youtube_id}"
+  end
 
   def set_taxon
     @taxon = Taxon.find(params[:id])

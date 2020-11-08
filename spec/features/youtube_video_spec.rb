@@ -32,5 +32,7 @@ end
 def then_it_is_displayed_on_animals_page
   expect(current_path).to eq(taxon_path(@species))
   video = YoutubeVideo.last
-  expect(page).to have_text video.link
+  embed_link = "https://www.youtube.com/embed/V06FJGSQ3U"
+  iframe = find('iframe')
+  expect(iframe[:src]).to eq(embed_link)
 end
