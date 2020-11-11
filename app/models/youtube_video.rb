@@ -1,5 +1,5 @@
 class YoutubeVideo < ApplicationRecord
-  URL_REGEX = /(?:https:\/\/)?(?:youtu.be\/|www.youtube.com\/watch\?v=)([\w]+)/
+  URL_REGEX = /(?:https:\/\/)?(?:youtu.be\/|www.youtube.com\/watch\?v=)([\w-]+)/
 
   before_save :extract_youtube_id
 

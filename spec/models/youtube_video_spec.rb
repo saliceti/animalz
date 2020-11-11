@@ -16,11 +16,16 @@ RSpec.describe YoutubeVideo, type: :model do
   it { is_expected.not_to allow_value('https://foo.com').for(:link) }
   it { is_expected.not_to allow_value('this is not a URL').for(:link) }
 
-  it 'stores youtube video id when saved' do
-    species = Taxon.create(rank: 'Species', common_name: 'this species')
-    expect(species.save).to be true
-    video = YoutubeVideo.create(link: 'https://youtu.be/V06FJGSQ3Ug', taxon: species)
-    expect(video.save).to be true
-    expect(video[:youtube_id]).to eq('V06FJGSQ3Ug')
+  [
+    {link: 'https://youtu.be/V06FJGSQ3Ug', id: 'V06FJGSQ3Ug'},
+    {link: 'https://youtu.be/nFrb-C6I6Ps', id: 'nFrb-C6I6Ps'}
+  ].each do |test_link|
+    it "stores youtube video id when saved <#{test_link[:link]}>" do
+      species = Taxon.create(rank: 'Species', common_name: 'this species')
+      expect(species.save).to be true
+      video = YoutubeVideo.create(link: test_link[:link], taxon: species)
+      expect(video.save).to be true
+      expect(video[:youtube_id]).to eq(test_link[:id])
+    end
   end
 end
