@@ -14,6 +14,10 @@ class Taxon < ApplicationRecord
     Taxon.where(rank: rank)
   end
 
+  def self.latest_created(quantity)
+    Taxon.order(:created_at).reverse_order.take quantity
+  end
+
   def ancestors
     if parent
       parent.ancestors + [parent]
@@ -21,4 +25,5 @@ class Taxon < ApplicationRecord
       []
     end
   end
+
 end
