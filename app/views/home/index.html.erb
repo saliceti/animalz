@@ -1,1 +1,8 @@
 <h1>Welcome to our planet!</h1>
+
+<h2>Latest content:</h2>
+<% @latest_content_strings.each do |content| %>
+<p>
+  <%= content %>
+</p>
+<% end %>

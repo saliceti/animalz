@@ -9,6 +9,10 @@ class YoutubeVideo < ApplicationRecord
 
   private
 
+  def self.latest_created(quantity)
+    YoutubeVideo.order(:created_at).reverse_order.take quantity
+  end
+
   def extract_youtube_id
     self.youtube_id = link.match(URL_REGEX).captures.first
   end
