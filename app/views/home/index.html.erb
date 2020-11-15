@@ -1,8 +1,16 @@
 <h1>Welcome to our planet!</h1>
 
 <h2>Latest content:</h2>
-<% @latest_content_strings.each do |content| %>
-<p>
-  <%= content %>
-</p>
+<table class="latest">
+<% @latest_contents.each do |content| %>
+  <% content_strings = strings_for_content(content) %>
+  <tr>
+    <td>
+      <%= content_strings['text'] %>
+    </td>
+    <td>
+      <%= content_strings['visual'] %>
+    </td>
+  </tr>
 <% end %>
+</table>

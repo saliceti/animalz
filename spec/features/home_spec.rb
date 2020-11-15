@@ -37,6 +37,7 @@ end
 
 def and_a_new_youtube_video_was_added
   @links = ['https://youtu.be/V06FJGSQ3U', 'https://youtu.be/V06FJGSQ3Z']
+  @thumbnails = ['https://img.youtube.com/vi/V06FJGSQ3U/0.jpg', 'https://img.youtube.com/vi/V06FJGSQ3Z/0.jpg']
   @links.each_with_index do |link, i|
     video = YoutubeVideo.create(link: link, taxon: Taxon.last(i+1).first)
     expect(video.save).to be true
@@ -51,11 +52,15 @@ def then_the_new_taxons_are_displayed
 end
 
 def and_the_new_videos_are_displayed
-  YoutubeVideo.last(2).each do |video|
+  YoutubeVideo.last(2).each_with_index do |video, i|
     expect(page).to have_text "New video added to #{video.taxon.common_name}"
-    Taxon.last(2).each do |taxon|
-      expect(page).to have_link taxon.common_name, href: taxon_path(taxon), count: 2
-    end
+    # TODO: Test presence of image link to taxon
+    expect(page).to have_css("img[src*='#{@thumbnails[i]}']")
+  end
+  Taxon.last(2).each do |taxon|
+    # The link is repeated if a video is added to a recent taxon
+    # TODO: validate the video link specifically
+    expect(page).to have_link taxon.common_name, href: taxon_path(taxon), count: 2
   end
 end
 
