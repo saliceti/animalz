@@ -31,3 +31,17 @@ iframe {
   height: 315px;
   border: none;
 }
+
+.thumbnail {
+  height: 80px;
+}
+
+.latest {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+.latest tr {
+  height: 80px;
+  border: solid;
+  border-width: 1px 0;
+}
