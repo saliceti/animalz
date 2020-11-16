@@ -26,7 +26,7 @@ def when_a_user_visits_the_home_page
 end
 
 def then_they_receive_greeting_message
-  expect(page).to have_text('Welcome to our planet!')
+  expect(page).to have_text('Welcome to our planet')
 end
 
 def and_the_menus_are_displayed
