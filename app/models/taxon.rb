@@ -29,6 +29,9 @@ class Taxon < ApplicationRecord
   end
 
   def ancestors
+    # Prevent infinite loop
+    raise "Taxon and parent are the same: #{self.inspect}" if self == parent
+
     if parent
       parent.ancestors + [parent]
     else
