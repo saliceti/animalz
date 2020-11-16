@@ -26,6 +26,10 @@ hr {
   clear: both;
 }
 
+h1 {
+  text-align: center;
+}
+
 iframe {
   width: 560px;
   height: 315px;
