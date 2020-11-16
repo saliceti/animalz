@@ -1,0 +1,37 @@
+<h1>Help</h1>
+
+You can browse all existing animons and if you can find one which isn't listed, you can add them and look after them!
+
+<h2>Classification</h2>
+Animons are grouped and classified using scientific classification, or <%= link_to 'taxonomy', 'https://en.wikipedia.org/wiki/Taxonomy_(biology)' %>.
+For example, here are the taxonomy ranks of the red fox:
+<ul>
+<li><b>Phylum:</b> Chordate</li>
+<li><b>Class:</b> Mammal</li>
+<li><b>Order:</b> Carnivoran</li>
+<li><b>Family:</b> Canid</li>
+<li><b>Genus:</b> True fox</li>
+<li><b>Species:</b> Red fox</li>
+</ul>
+
+There are even more possible ranks:
+<%= Taxon::RANKS.join(' > ') %>
+<br/>
+If you want to add an animal, make sure to add it to the right one!
+<br/>
+Hint: there is a lot of help available online, starting with <%= link_to 'Wikipedia', 'https://www.wikipedia.org'%>.
+
+<h2>Anidex</h2>
+In the <%= link_to 'Anidex', browse_index_path %>, you can browse all animons by taxonomy rank. Also, from each animon
+you can navigate to all related animons.
+
+<h2>Add a new animon</h2>
+If your favourite animon is not there, you can add it yourself and start looking after it!
+<br/>
+Look for its scientific name and its classification. Click <%= link_to 'New', new_taxon_path %> to create the classification and the animon
+(they are both called <i>taxons</i>). Enter the information and click <b>Create taxon</b>!
+
+<h2>Add videos</h2>
+There are great videos on <%= link_to 'Youtube', 'https://www.youtube.com'%>. If you find a nice one for an animon on Youtube,
+first click on <b>Share</b>, then <b>Copy</b>, next to the link.
+Go to the animon page, click on Edit then <b>Add YouTube video</b>. Paste the link, click <b>Create Youtube video</b>, and voilà!

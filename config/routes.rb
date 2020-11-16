@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'browse/index'
+  get 'help/index'
 end
