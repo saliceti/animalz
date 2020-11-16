@@ -32,6 +32,7 @@ class TaxonsController < ApplicationController
       if @taxon.save
         format.html { redirect_to @taxon, notice: 'Taxon was successfully created.' }
       else
+        @taxons = Taxon.all
         format.html { render :new }
       end
     end
@@ -42,6 +43,7 @@ class TaxonsController < ApplicationController
       if @taxon.update(taxon_params)
         format.html { redirect_to @taxon, notice: 'Taxon was successfully updated.' }
       else
+        @taxons = Taxon.all
         format.html { render :edit }
       end
     end
