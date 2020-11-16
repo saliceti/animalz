@@ -1,7 +1,17 @@
+class RankOrderValidator < ActiveModel::Validator
+  def validate(record)
+    return unless record.parent
+    if Taxon::RANKS.index(record.rank) <= Taxon::RANKS.index(record.parent.rank)
+      record.errors[:base] << "#{record.rank} cannot have #{record.parent.rank} as parent"
+    end
+  end
+end
+
 class Taxon < ApplicationRecord
   belongs_to :parent, class_name: "Taxon", optional: true
   has_many :children, class_name: "Taxon", foreign_key: "parent_id"
   has_many :youtube_videos
+  validates_with RankOrderValidator
 
   RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
 

@@ -8,4 +8,10 @@ RSpec.describe Taxon, type: :model do
   it { is_expected.to belong_to(:parent).optional.class_name('Taxon') }
   it { is_expected.to have_many(:youtube_videos) }
   it { is_expected.to have_many(:children).class_name('Taxon') }
+
+  it "is not valid if the rank order is wrong" do
+    parent = Taxon.new(rank: 'Order')
+    child = Taxon.new(rank: 'Class', parent: parent)
+    expect(child).to_not be_valid
+  end
 end

@@ -112,6 +112,7 @@ end
 def and_a_the_child_taxon_can_be_created
   fill_in 'Common name', with: 'Amphibian'
   fill_in 'Scientific name', with: 'Amphibia'
+  select 'Class', from: 'taxon_rank'
   click_button 'commit'
   expect(page).to have_text 'Taxon was successfully created'
   expect(page).to have_text 'Common name: Amphibian'
