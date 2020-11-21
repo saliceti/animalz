@@ -49,3 +49,9 @@ iframe {
   border: solid;
   border-width: 1px 0;
 }
+
+.identity {
+  border: 2px solid;
+  background-color: lightgrey;
+  border-radius: 12px;
+}
