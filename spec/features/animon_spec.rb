@@ -17,13 +17,20 @@ feature 'Animon CRUD' do
     given_a_full_taxon_hierarchy
     when_a_user_creates_an_animon
     then_it_is_displayed
+    and_edit_links_are_displayed
+  end
+  scenario 'Edit' do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    when_a_user_edits_an_animon
+    then_it_is_updated
   end
 end
 
 def and_an_animon_is_linked_to_a_taxon
   species = Taxon.where(rank: 'Species').first
-  animon = Animon.new(taxon: species)
-  animon.save
+  @animon = Animon.new(taxon: species)
+  @animon.save
 end
 
 def when_a_user_clicks_the_new_animon_link
@@ -48,4 +55,20 @@ end
 
 def then_it_is_displayed
   expect(page).to have_text 'Animon: Species common name'
+end
+
+def and_edit_links_are_displayed
+  id = current_path.split('/').last
+  expect(page).to have_link 'Edit', href: edit_animon_path(id)
+end
+
+def when_a_user_edits_an_animon
+  visit edit_animon_path(@animon)
+  expect(page).to have_select('animon_taxon_id', selected: 'Species: Species common name')
+  select 'Subspecies: Subspecies common name', from: 'animon_taxon_id'
+  click_button 'commit'
+end
+
+def then_it_is_updated
+  expect(page).to have_text 'Animon: Subspecies common name'
 end

@@ -13,6 +13,9 @@ class AnimonsController < ApplicationController
     @taxons = Taxon.available_species_and_subspecies
   end
 
+  def edit
+    @taxons = Taxon.available_species_and_subspecies @animon.taxon
+  end
 
   def create
     @animon = Animon.new(animon_params)
@@ -20,8 +23,19 @@ class AnimonsController < ApplicationController
       if @animon.save
         format.html { redirect_to @animon, notice: 'Animon was successfully created.' }
       else
-        @taxons = Taxon.available_species_and_subspecies
+        @taxons = Taxon.available_species_and_subspecies @animon.taxon
         format.html { render :new }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @animon.update(animon_params)
+        format.html { redirect_to @animon, notice: 'Animon was successfully updated.' }
+      else
+        @taxons = Taxon.available_species_and_subspecies @animon.taxon
+        format.html { render :edit }
       end
     end
   end
