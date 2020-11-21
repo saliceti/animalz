@@ -61,6 +61,8 @@ end
 
 def then_it_is_displayed
   expect(page).to have_text 'Animon: Species common name'
+  animon = Animon.first
+  expect(page).to have_link 'Identity', href: taxon_path(animon.taxon)
 end
 
 def and_edit_links_are_displayed

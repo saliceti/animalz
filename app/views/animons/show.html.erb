@@ -3,7 +3,7 @@
 <h1>Animon: <%= @animon.taxon.common_name %></h1>
 
 <div class='identity'>
-  <h2>Identity</h2>
+  <h2><%= link_to 'Identity', taxon_path(@animon.taxon) %></h2>
   <%= render 'taxons/description', taxon: @animon.taxon %>
 </div>
 
