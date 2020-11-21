@@ -12,7 +12,7 @@
 
   <div class="field">
     <%= form.label :taxon_id, 'Select the species or subspecies:' %>
-    <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name) %>
+    <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name, :include_blank => "") %>
   </div>
 
   <div class="actions">

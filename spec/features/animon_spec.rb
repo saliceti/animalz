@@ -37,7 +37,7 @@ def then_it_shows_the_animon_form
 end
 
 def and_available_species_and_subspecies_are_displayed
-  expect(page).to have_select('animon_taxon_id', options: ['Subspecies: Subspecies common name'])
+  expect(page).to have_select('animon_taxon_id', options: ['', 'Subspecies: Subspecies common name'])
 end
 
 def when_a_user_creates_an_animon

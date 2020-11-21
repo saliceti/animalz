@@ -16,6 +16,7 @@ class AnimonsController < ApplicationController
       if @animon.save
         format.html { redirect_to @animon, notice: 'Animon was successfully created.' }
       else
+        @taxons = Taxon.available_species_and_subspecies
         format.html { render :new }
       end
     end
