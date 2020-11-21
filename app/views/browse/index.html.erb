@@ -4,4 +4,5 @@
   <% Taxon::RANKS.each do |rank| %>
   <li><%= link_to "By #{rank}", taxons_path(rank: rank) %></li>
   <% end %>
+  <li><%= link_to 'All animons', animons_path %></li>
 </ul>

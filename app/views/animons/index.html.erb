@@ -1,0 +1,20 @@
+<h1>All animons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Common name</th>
+      <th>Classification</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @animons.each do |animon| %>
+      <tr>
+        <td><%= link_to animon.taxon.common_name, animon %></td>
+        <td><%= link_to "#{animon.taxon.rank}: #{animon.taxon.scientific_name}", animon.taxon %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

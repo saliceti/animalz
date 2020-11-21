@@ -1,6 +1,10 @@
 class AnimonsController < ApplicationController
   before_action :set_animon, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @animons = Animon.all
+  end
+
   def show
   end
 
