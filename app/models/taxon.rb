@@ -30,11 +30,11 @@ class Taxon < ApplicationRecord
     Taxon.order(:created_at).reverse_order.take quantity
   end
 
-  def self.available_species_and_subspecies()
+  def self.available_species_and_subspecies(extra_taxon=nil)
     Taxon
       .where(rank: ['Species', 'Subspecies'])
       .left_outer_joins(:animon)
-      .where(animons: {taxon_id: nil})
+      .where(animons: {taxon_id: [nil, extra_taxon]})
   end
 
   def ancestors
