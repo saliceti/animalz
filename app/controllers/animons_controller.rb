@@ -40,6 +40,13 @@ class AnimonsController < ApplicationController
     end
   end
 
+  def destroy
+    @animon.destroy
+    respond_to do |format|
+      format.html { redirect_to animons_path, notice: 'Animon was successfully destroyed.' }
+    end
+  end
+
   private
 
   def set_animon

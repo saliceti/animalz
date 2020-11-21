@@ -25,6 +25,12 @@ feature 'Animon CRUD' do
     when_a_user_edits_an_animon
     then_it_is_updated
   end
+  scenario 'Delete' do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    when_a_user_deletes_an_animon
+    then_it_is_deleted
+  end
 end
 
 def and_an_animon_is_linked_to_a_taxon
@@ -71,4 +77,13 @@ end
 
 def then_it_is_updated
   expect(page).to have_text 'Animon: Subspecies common name'
+end
+
+def when_a_user_deletes_an_animon
+  visit edit_animon_path(@animon)
+  expect(page).to have_link('Delete animon', href: animon_path(@animon)){|l| l["data-method"] == "delete" }
+end
+
+def then_it_is_deleted
+  expect{cbdriver.delete animon_path(@animon)}.to change{Animon.count}.by -1
 end

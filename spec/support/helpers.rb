@@ -9,4 +9,7 @@ module Helpers
     end
   end
 
+  def cbdriver
+    Capybara.current_session.driver
+  end
 end

@@ -1,3 +1,5 @@
 <h1>Editing Animon</h1>
 
 <%= render 'form', animon: @animon %>
+
+<%= link_to 'Delete animon', animon_path(@animon), method: :delete, data: { confirm: 'Are you sure?' } %>
