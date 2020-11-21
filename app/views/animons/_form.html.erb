@@ -13,6 +13,9 @@
   <div class="field">
     <%= form.label :taxon_id, 'Select the species or subspecies:' %>
     <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name, :include_blank => "") %>
+    <p class='hint'>
+    <%= link_to 'Add species or subspecies', new_taxon_path %>  if it is not present!
+    </p>
   </div>
 
   <div class="actions">
