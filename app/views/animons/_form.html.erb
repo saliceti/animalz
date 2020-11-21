@@ -1,0 +1,22 @@
+<%= form_with model: animon, local: true do |form| %>
+  <% if animon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(animon.errors.count, "error") %> prohibited this animon from being saved:</h2>
+      <ul>
+      <% animon.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :taxon_id, 'Select the species or subspecies:' %>
+    <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>

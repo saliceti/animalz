@@ -6,39 +6,7 @@
   <%= link_to 'Destroy', @taxon, method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>
 
-<p>
-  <strong>Rank:</strong>
-  <%= link_to @taxon.rank, taxons_path(rank: @taxon.rank) %>
-</p>
-
-<p>
-  <strong>Common name:</strong>
-  <%= @taxon.common_name %>
-</p>
-
-<p>
-  <strong>Scientific name:</strong>
-  <%= @taxon.scientific_name %>
-</p>
-
-<p>
-  <strong>Scientific classification:</strong>
-  <% @ancestors.each do |ancestor| %>
-    <%= link_to ancestor.scientific_name, taxon_path(ancestor) %> >
-  <% end %>
-  <%= @taxon.scientific_name %>
-</p>
-
-<p>
-  <% unless @taxon.children.empty? %>
-  <strong>Child taxons:</strong>
-  <ul>
-    <% @taxon.children.each do |taxon| %>
-    <li> <%= link_to taxon.common_name, taxon_path(taxon) %> </li>
-    <% end %>
-  </ul>
-  <% end %>
-</p>
+<%= render 'description', taxon: @taxon %>
 
 <p>
   <% unless @taxon.youtube_videos.empty? %>

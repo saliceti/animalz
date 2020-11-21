@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Animon: <%= @animon.taxon.common_name %></h1>
+
+<div class='identity'>
+  <h2>Identity</h2>
+  <%= render 'taxons/description', taxon: @animon.taxon %>
+</div>
+
+<p>
+  <%= link_to 'Edit', edit_animon_path(@animon) %>
+</p>

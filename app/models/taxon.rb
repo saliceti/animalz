@@ -10,6 +10,7 @@ end
 class Taxon < ApplicationRecord
   belongs_to :parent, class_name: "Taxon", optional: true
   has_many :children, class_name: "Taxon", foreign_key: "parent_id"
+  has_one :animon
   has_many :youtube_videos
   validates_with RankOrderValidator
   validates :common_name, :scientific_name, presence: true, uniqueness: true
@@ -27,6 +28,13 @@ class Taxon < ApplicationRecord
 
   def self.latest_created(quantity)
     Taxon.order(:created_at).reverse_order.take quantity
+  end
+
+  def self.available_species_and_subspecies()
+    Taxon
+      .where(rank: ['Species', 'Subspecies'])
+      .left_outer_joins(:animon)
+      .where(animons: {taxon_id: nil})
   end
 
   def ancestors

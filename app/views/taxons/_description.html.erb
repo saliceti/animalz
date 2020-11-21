@@ -1,0 +1,33 @@
+<p>
+  <strong>Rank:</strong>
+  <%= link_to taxon.rank, taxons_path(rank: taxon.rank) %>
+</p>
+
+<p>
+  <strong>Common name:</strong>
+  <%= taxon.common_name %>
+</p>
+
+<p>
+  <strong>Scientific name:</strong>
+  <%= taxon.scientific_name %>
+</p>
+
+<p>
+  <strong>Scientific classification:</strong>
+  <% taxon.ancestors.each do |ancestor| %>
+    <%= link_to ancestor.scientific_name, taxon_path(ancestor) %> >
+  <% end %>
+  <%= taxon.scientific_name %>
+</p>
+
+<p>
+  <% unless taxon.children.empty? %>
+  <strong>Child taxons:</strong>
+  <ul>
+    <% taxon.children.each do |child| %>
+    <li> <%= link_to child.common_name, taxon_path(child) %> </li>
+    <% end %>
+  </ul>
+  <% end %>
+</p>
