@@ -2,4 +2,6 @@
 
 <%= render 'form', animon: @animon %>
 
-<%= link_to 'Delete animon', animon_path(@animon), method: :delete, data: { confirm: 'Are you sure?' } %>
+<p class='dangerous'>
+  <%= link_to 'Delete animon', animon_path(@animon), method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
