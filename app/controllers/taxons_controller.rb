@@ -1,6 +1,6 @@
 class TaxonsController < ApplicationController
   before_action :set_taxon, only: [:show, :edit, :update, :destroy]
-  helper_method :embed_link, :parent_taxon
+  helper_method :parent_taxon
 
   def index
     if params[:rank]
@@ -65,10 +65,6 @@ class TaxonsController < ApplicationController
     else
       form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, :include_blank => "")
     end
-  end
-
-  def embed_link(youtube_id)
-    "https://www.youtube.com/embed/#{youtube_id}"
   end
 
   def set_taxon

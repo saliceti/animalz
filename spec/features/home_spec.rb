@@ -40,10 +40,12 @@ end
 def and_a_new_youtube_video_was_added
   @links = ['https://youtu.be/V06FJGSQ3U', 'https://youtu.be/V06FJGSQ3Z']
   @thumbnails = ['https://img.youtube.com/vi/V06FJGSQ3U/0.jpg', 'https://img.youtube.com/vi/V06FJGSQ3Z/0.jpg']
-  @links.each_with_index do |link, i|
-    video = YoutubeVideo.create(link: link, taxon: Taxon.last(i+1).first)
-    expect(video.save).to be true
-  end
+  @species_animon = Animon.new(taxon: Taxon.find_by(rank: 'Species'))
+  @subspecies_animon = Animon.new(taxon: Taxon.find_by(rank: 'Subspecies'))
+  video = YoutubeVideo.new(link: @links.first, animon: @species_animon)
+  expect(video.save).to be true
+  video = YoutubeVideo.new(link: @links.second, animon: @subspecies_animon)
+  expect(video.save).to be true
 end
 
 def then_the_new_taxons_are_displayed
@@ -55,17 +57,17 @@ end
 
 def and_the_new_videos_are_displayed
   YoutubeVideo.last(2).each_with_index do |video, i|
-    expect(page).to have_text "New video added to #{video.taxon.common_name}"
+    expect(page).to have_text "New video added to #{video.animon.taxon.common_name}"
     # TODO: Test presence of image link to taxon
     expect(page).to have_css("img[src*='#{@thumbnails[i]}']")
   end
-  Taxon.last(2).each do |taxon|
-    # The link is repeated if a video is added to a recent taxon
-    # TODO: validate the video link specifically
-    expect(page).to have_link taxon.common_name, href: taxon_path(taxon), count: 2
+  Animon.last(2).each do |animon|
+    expect(page).to have_link animon.taxon.common_name, href: animon_path(animon)
   end
 end
 
 def and_videos_are_listed_before_taxons
-  expect(page.text.index("New video added to #{YoutubeVideo.last.taxon.common_name}")).to be < page.text.index("New #{Taxon.last.rank}: #{Taxon.last.common_name}")
+  video_index = page.text.index("New video added to #{YoutubeVideo.last.animon.taxon.common_name}")
+  taxon_index = page.text.index("New #{Taxon.last.rank}: #{Taxon.last.common_name}")
+  expect(video_index).to be < taxon_index
 end

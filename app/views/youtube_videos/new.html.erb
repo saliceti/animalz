@@ -1,4 +1,4 @@
-<h1>Add video to <%= @taxon.common_name %> </h1>
+<h1>Add video to <%= @animon.taxon.common_name %> </h1>
 
 <%= form_with model: @video, local: true do |form| %>
   <% if @video.errors.any? %>
@@ -17,7 +17,7 @@
     <%= form.text_field :link %>
   </div>
 
-  <%= form.hidden_field :taxon_id, :value => @video.taxon.id %>
+  <%= form.hidden_field :animon_id, :value => @video.animon.id %>
 
   <div class="actions">
     <%= form.submit %>

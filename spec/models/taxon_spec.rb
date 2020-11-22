@@ -10,7 +10,6 @@ RSpec.describe Taxon, type: :model do
   it { is_expected.to validate_presence_of(:scientific_name) }
   it { is_expected.to validate_uniqueness_of(:scientific_name) }
   it { is_expected.to have_db_column(:parent_id).of_type(:integer) }
-  it { is_expected.to have_many(:youtube_videos) }
   it { is_expected.to have_many(:children).class_name('Taxon') }
 
   it "is not valid if the rank order is wrong" do

@@ -3,7 +3,7 @@ class YoutubeVideo < ApplicationRecord
 
   before_save :extract_youtube_id
 
-  belongs_to :taxon
+  belongs_to :animon
   validates :link, presence: true
   validates_format_of :link, :with => URL_REGEX
 

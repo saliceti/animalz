@@ -1,5 +1,6 @@
 class AnimonsController < ApplicationController
   before_action :set_animon, only: [:show, :edit, :update, :destroy]
+  helper_method :embed_link
 
   def index
     @animons = Animon.all
@@ -55,6 +56,10 @@ class AnimonsController < ApplicationController
 
   def animon_params
     params.require(:animon).permit(:taxon_id)
+  end
+
+  def embed_link(youtube_id)
+    "https://www.youtube.com/embed/#{youtube_id}"
   end
 
 end

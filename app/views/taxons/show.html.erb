@@ -7,15 +7,3 @@
 </p>
 
 <%= render 'description', taxon: @taxon %>
-
-<p>
-  <% unless @taxon.youtube_videos.empty? %>
-  <strong>Latest YouTube videos:</strong>
-  <% end %>
-  <% @taxon.youtube_videos.each do |video| %>
-    <p>
-      <iframe src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </p>
-  <% end %>
-</p>
-

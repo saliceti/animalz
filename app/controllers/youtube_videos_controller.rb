@@ -1,17 +1,16 @@
 class YoutubeVideosController < ApplicationController
   def new
-    @taxon = Taxon.find(params[:taxon])
-    @video = YoutubeVideo.new(taxon: @taxon)
+    @animon = Animon.find(params[:animon])
+    @video = YoutubeVideo.new(animon: @animon)
   end
-
 
   def create
     @video = YoutubeVideo.new(video_params)
-    @taxon = Taxon.find(video_params[:taxon_id])
+    @animon = Animon.find(video_params[:animon_id])
 
     respond_to do |format|
       if @video.save
-        format.html { redirect_to @taxon, notice: 'Video was successfully added.' }
+        format.html { redirect_to @animon, notice: 'Video was successfully added.' }
       else
         format.html { render :new }
       end
@@ -21,7 +20,7 @@ class YoutubeVideosController < ApplicationController
 
 private
   def video_params
-    params.require(:youtube_video).permit(:link, :taxon_id)
+    params.require(:youtube_video).permit(:link, :animon_id)
   end
 
 end

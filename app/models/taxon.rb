@@ -12,7 +12,7 @@ class Taxon < ApplicationRecord
   belongs_to :parent, class_name: "Taxon", optional: true
   has_many :children, class_name: "Taxon", foreign_key: "parent_id"
   has_one :animon
-  has_many :youtube_videos
+
   validates :parent, presence: true, unless: :is_top_rank?
   validates_with RankOrderValidator
   validates :rank, presence: true
