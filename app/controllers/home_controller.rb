@@ -7,6 +7,7 @@ class HomeController < ApplicationController
 
     @latest_contents = []
     @latest_contents.concat Taxon.latest_created(sample)
+    @latest_contents.concat Animon.latest_created(sample)
     @latest_contents.concat YoutubeVideo.latest_created(sample)
     @latest_contents = @latest_contents.sort_by(&:created_at).reverse
     @latest_contents = @latest_contents[0, total]
@@ -21,6 +22,9 @@ class HomeController < ApplicationController
     when Taxon
       content_strings['text'] << "New #{content_object.rank}: "
       content_strings['text'] << helpers.link_to(content_object.common_name, helpers.taxon_path(content_object))
+    when Animon
+      content_strings['text'] << "New animon: "
+      content_strings['text'] << helpers.link_to(content_object.taxon.common_name, helpers.animon_path(content_object))
     when YoutubeVideo
       animon_href = helpers.animon_path(content_object.animon)
       content_strings['text'] << "New video added to "
