@@ -1,4 +1,9 @@
 require 'rails_helper'
+require './spec/support/helpers'
+
+RSpec.configure do |c|
+  c.include Helpers
+end
 
 RSpec.describe YoutubeVideo, type: :model do
   it { is_expected.to have_db_column(:link).of_type(:string) }
@@ -21,8 +26,8 @@ RSpec.describe YoutubeVideo, type: :model do
     {link: 'https://youtu.be/nFrb-C6I6Ps', id: 'nFrb-C6I6Ps'}
   ].each do |test_link|
     it "stores youtube video id when saved <#{test_link[:link]}>" do
-      species = Taxon.create(rank: 'Species', common_name: 'this species', scientific_name: 'lorem ipsum')
-      expect(species.save).to be true
+      given_a_full_taxon_hierarchy
+      species = Taxon.where(rank: 'Species').first
       video = YoutubeVideo.create(link: test_link[:link], taxon: species)
       expect(video.save).to be true
       expect(video[:youtube_id]).to eq(test_link[:id])

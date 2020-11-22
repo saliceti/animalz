@@ -1,8 +1,9 @@
 class RankOrderValidator < ActiveModel::Validator
   def validate(record)
     return unless record.parent
+    # Parent rank must be lower than child's
     if Taxon::RANKS.index(record.rank) <= Taxon::RANKS.index(record.parent.rank)
-      record.errors.add(:parent, "#{record.rank} cannot have #{record.parent.rank} as parent")
+      record.errors.add(:parent_id, "#{record.parent.rank} is invalid for rank #{record.rank}")
     end
   end
 end
@@ -12,6 +13,7 @@ class Taxon < ApplicationRecord
   has_many :children, class_name: "Taxon", foreign_key: "parent_id"
   has_one :animon
   has_many :youtube_videos
+  validates :parent, presence: true, unless: :is_top_rank?
   validates_with RankOrderValidator
   validates :rank, presence: true
   validates :common_name, :scientific_name, presence: true, uniqueness: true
@@ -20,6 +22,10 @@ class Taxon < ApplicationRecord
 
   def rank_and_common_name
     "#{rank}: #{common_name}"
+  end
+
+  def is_top_rank?
+    Taxon::RANKS.index(rank) == 0
   end
 
   def self.select_rank(rank)
