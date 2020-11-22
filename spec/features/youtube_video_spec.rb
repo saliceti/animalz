@@ -26,7 +26,7 @@ end
 
 def and_adds_a_video
 
-  expect(page).to have_link 'Add YouTube video', href: new_youtube_video_path(animon: @species_animon)
+  expect(page).to have_link 'Add YouTube video', href: new_youtube_video_path(animon_id: @species_animon)
   click_link('Add YouTube video')
   expect(page).to have_text "Add video to #{@species_animon.taxon.common_name}"
   expect(page).to have_field "youtube_video_animon_id", with: @species_animon.id, type: :hidden

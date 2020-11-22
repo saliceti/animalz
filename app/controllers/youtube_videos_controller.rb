@@ -1,6 +1,6 @@
 class YoutubeVideosController < ApplicationController
   def new
-    @animon = Animon.find(params[:animon])
+    @animon = Animon.find(params[:animon_id])
     @video = YoutubeVideo.new(animon: @animon)
   end
 
