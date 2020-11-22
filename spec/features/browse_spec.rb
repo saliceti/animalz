@@ -31,6 +31,13 @@ feature 'Browse' do
     and_the_user_clicks_on_all_animons
     then_the_animon_is_listed
   end
+
+  scenario "All taxons" do
+    given_a_full_taxon_hierarchy
+    when_a_user_visits_the_browse_page
+    and_the_user_clicks_on_all_taxons
+    then_the_taxons_are_listed
+  end
 end
 
 def when_a_user_visits_the_browse_page
@@ -65,4 +72,15 @@ end
 def then_the_animon_is_listed
   expect(page).to have_link @animon.taxon.common_name, href: animon_path(@animon)
   expect(page).to have_link "#{@animon.taxon.rank}: #{@animon.taxon.scientific_name}", href: taxon_path(@animon.taxon)
+end
+
+def and_the_user_clicks_on_all_taxons
+  click_on 'All taxons'
+end
+
+def then_the_taxons_are_listed
+  expect(page).to have_text 'All taxons'
+  Taxon.all.each do |t|
+    expect(page).to have_link t.common_name, href: taxon_path(t)
+  end
 end

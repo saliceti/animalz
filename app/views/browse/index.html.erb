@@ -1,8 +1,9 @@
 <h1>Browse all Animons</h1>
 
 <ul>
+  <li><%= link_to 'All animons', animons_path %></li>
+  <li><%= link_to 'All taxons', taxons_path %></li>
   <% Taxon::RANKS.each do |rank| %>
   <li><%= link_to "By #{rank}", taxons_path(rank: rank) %></li>
   <% end %>
-  <li><%= link_to 'All animons', animons_path %></li>
 </ul>
