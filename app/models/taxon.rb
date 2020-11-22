@@ -13,6 +13,7 @@ class Taxon < ApplicationRecord
   has_one :animon
   has_many :youtube_videos
   validates_with RankOrderValidator
+  validates :rank, presence: true
   validates :common_name, :scientific_name, presence: true, uniqueness: true
 
   RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
