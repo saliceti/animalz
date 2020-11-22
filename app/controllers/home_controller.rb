@@ -2,8 +2,8 @@ class HomeController < ApplicationController
   helper_method :strings_for_content
 
   def index
-    sample = 5
-    total = 10
+    sample = 50
+    total = 100
 
     @latest_contents = []
     @latest_contents.concat Taxon.latest_created(sample)
