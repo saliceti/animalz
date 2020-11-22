@@ -15,8 +15,11 @@ RSpec.describe Taxon, type: :model do
   it { is_expected.to have_many(:children).class_name('Taxon') }
 
   it "is not valid if the rank order is wrong" do
-    parent = Taxon.new(rank: 'Order')
-    child = Taxon.new(rank: 'Class', parent: parent)
+    parent = Taxon.new(rank: 'Order', common_name: 'Abcd', scientific_name: 'Abcd Defg')
+    expect(parent).to be_valid
+    child = Taxon.new(rank: 'Class', parent: parent, common_name: 'Abcd1', scientific_name: 'Abcd1 Defg1')
     expect(child).to_not be_valid
+    expect(child.errors.details).to eq({ :parent => [{:error => "Class cannot have Order as parent"}] })
   end
+
 end

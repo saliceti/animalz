@@ -2,7 +2,7 @@ class RankOrderValidator < ActiveModel::Validator
   def validate(record)
     return unless record.parent
     if Taxon::RANKS.index(record.rank) <= Taxon::RANKS.index(record.parent.rank)
-      record.errors[:base] << "#{record.rank} cannot have #{record.parent.rank} as parent"
+      record.errors.add(:parent, "#{record.rank} cannot have #{record.parent.rank} as parent")
     end
   end
 end
