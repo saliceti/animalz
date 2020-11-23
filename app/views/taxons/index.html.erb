@@ -8,7 +8,6 @@
       <th>Common name</th>
       <th>Scientific name</th>
       <th>Class</th>
-      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -18,7 +17,6 @@
         <td><%= link_to taxon.common_name, taxon %></td>
         <td><%= link_to taxon.scientific_name, taxon %></td>
         <td><%= taxon.rank %></td>
-        <td><%= link_to 'Destroy', taxon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

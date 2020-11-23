@@ -3,7 +3,6 @@
 <p>
   <%= link_to 'Edit', edit_taxon_path(@taxon) %>
   <%= link_to 'New child taxon', new_taxon_path(readonly_parent_taxon: @taxon) %>
-  <%= link_to 'Destroy', @taxon, method: :delete, data: { confirm: 'Are you sure?' } %>
 </p>
 
 <%= render 'description', taxon: @taxon %>

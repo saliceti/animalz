@@ -29,7 +29,7 @@ feature 'Animon CRUD' do
     given_a_full_taxon_hierarchy
     and_an_animon_is_linked_to_a_taxon
     when_a_user_deletes_an_animon
-    then_it_is_deleted
+    then_the_animon_is_deleted
   end
 end
 
@@ -86,6 +86,6 @@ def when_a_user_deletes_an_animon
   expect(page).to have_link('Delete animon', href: animon_path(@animon)){|l| l["data-method"] == "delete" }
 end
 
-def then_it_is_deleted
+def then_the_animon_is_deleted
   expect{cbdriver.delete animon_path(@animon)}.to change{Animon.count}.by -1
 end

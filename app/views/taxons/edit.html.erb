@@ -1,3 +1,7 @@
 <h1>Editing Taxon</h1>
 
 <%= render 'form', taxon: @taxon %>
+
+<p class='dangerous'>
+  <%= link_to 'Delete taxon', @taxon, method: :delete, data: { confirm: 'Are you sure?' } %>
+</p>
