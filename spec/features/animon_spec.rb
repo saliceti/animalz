@@ -31,6 +31,12 @@ feature 'Animon CRUD' do
     when_a_user_deletes_an_animon
     then_the_animon_is_deleted
   end
+  scenario 'Add twitter handle' do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    when_a_user_adds_a_twitter_handle
+    then_the_twitter_content_displayed
+  end
 end
 
 def and_an_animon_is_linked_to_a_taxon
@@ -63,6 +69,7 @@ def then_it_is_displayed
   expect(page).to have_text 'Animon: Species common name'
   animon = Animon.first
   expect(page).to have_link 'Identity', href: taxon_path(animon.taxon)
+  expect(page).not_to have_link 'Tweets by'
 end
 
 def and_edit_links_are_displayed
@@ -88,4 +95,16 @@ end
 
 def then_the_animon_is_deleted
   expect{cbdriver.delete animon_path(@animon)}.to change{Animon.count}.by -1
+end
+
+def when_a_user_adds_a_twitter_handle
+  visit edit_animon_path(@animon)
+  expect(page).to have_select('animon_taxon_id', selected: 'Species: Species common name')
+  fill_in 'Twitter handle', with: 'speciestwitterhandle'
+  click_button 'commit'
+end
+
+def then_the_twitter_content_displayed
+  embed_link = "https://twitter.com/speciestwitterhandle"
+  expect(page).to have_link 'Tweets by speciestwitterhandle', href: embed_link
 end

@@ -55,7 +55,7 @@ class AnimonsController < ApplicationController
   end
 
   def animon_params
-    params.require(:animon).permit(:taxon_id)
+    params.require(:animon).permit(:taxon_id, :twitter_handle)
   end
 
   def embed_link(youtube_id)

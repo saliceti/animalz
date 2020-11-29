@@ -13,13 +13,22 @@
 </p>
 
 
-<p>
-  <% unless @animon.youtube_videos.empty? %>
-  <strong>Latest YouTube videos:</strong>
+<div class='media-content' >
+  <div class='youtube-iframe'>
+    <% unless @animon.youtube_videos.empty? %>
+    <strong>Latest YouTube videos:</strong>
+    <% end %>
+    <% @animon.youtube_videos.each do |video| %>
+      <p>
+        <iframe src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </p>
+    <% end %>
+  </div>
+
+  <% if @animon.twitter_handle.present? %>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div class='twitter-handle-timeline'>
+    <%= link_to "Tweets by #{@animon.twitter_handle}", "https://twitter.com/#{@animon.twitter_handle}", class: 'twitter-timeline', 'data-width' => 500, 'data-height'=>1000, 'data-dnt'=>true %>
+  </div>
   <% end %>
-  <% @animon.youtube_videos.each do |video| %>
-    <p>
-      <iframe src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </p>
-  <% end %>
-</p>
+</div>
