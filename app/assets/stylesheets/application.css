@@ -63,3 +63,14 @@ iframe {
 .dangerous a {
   color: red;
 }
+
+.media-content {
+  display: flex;
+}
+
+.youtube-iframe {
+  flex: 1;
+}
+.twitter-handle-timeline {
+  flex: 1;
+}
