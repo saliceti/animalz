@@ -39,6 +39,5 @@ def then_it_is_displayed_on_animon_page
   expect(current_path).to eq(animon_path(@species_animon))
   video = YoutubeVideo.last
   embed_link = "https://www.youtube.com/embed/V06FJGSQ3U"
-  iframe = find('iframe')
-  expect(iframe[:src]).to eq(embed_link)
+  expect(page).to have_css("iframe[src='#{embed_link}']")
 end
