@@ -4,3 +4,9 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+@layer base {
+  a {
+    @apply underline hover:text-yellow-300;
+  }
+}

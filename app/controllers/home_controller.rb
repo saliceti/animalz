@@ -29,7 +29,7 @@ class HomeController < ApplicationController
       animon_href = helpers.animon_path(content_object.animon)
       content_strings['text'] << "New video added to "
       content_strings['text'] << helpers.link_to(content_object.animon.taxon.common_name, animon_href)
-      thumbnail = helpers.image_tag(youtube_thumbnail_link(content_object.youtube_id), class: 'thumbnail')
+      thumbnail = helpers.image_tag(youtube_thumbnail_link(content_object.youtube_id), class: 'w-64 mt-2')
       content_strings['visual'] = helpers.link_to thumbnail, animon_href
     end
     content_strings

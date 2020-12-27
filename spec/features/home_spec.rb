@@ -28,7 +28,7 @@ def when_a_user_visits_the_home_page
 end
 
 def then_they_receive_greeting_message
-  expect(page).to have_text('Welcome to our planet')
+  expect(page).to have_text('Welcome!')
 end
 
 def and_the_menus_are_displayed
@@ -57,7 +57,7 @@ end
 
 def then_the_new_taxons_are_displayed
   Taxon.last(2).each do |taxon|
-    within('td', text: "New #{taxon.rank}: #{taxon.common_name}") do
+    within('div', class: 'p-2', text: "New #{taxon.rank}: #{taxon.common_name}") do
       expect(page).to have_link taxon.common_name, href: taxon_path(taxon)
     end
   end
@@ -65,7 +65,7 @@ end
 
 def and_the_new_animons_are_displayed
   @animons.each do |animon|
-    within('td', text: "New animon: #{animon.taxon.common_name}") do
+    within('div', class: 'p-2', text: "New animon: #{animon.taxon.common_name}") do
       expect(page).to have_link animon.taxon.common_name, href: animon_path(animon)
     end
   end
@@ -74,7 +74,7 @@ end
 def and_the_new_videos_are_displayed
   @animons.each_with_index do |animon, i|
     video = animon.youtube_videos.first
-    within('tr', text: "New video added to #{animon.taxon.common_name}") do
+    within('div', class: 'p-2', text: "New video added to #{animon.taxon.common_name}") do
       # TODO: Test presence of image link to animon
       expect(page).to have_css("img[src*='#{@thumbnails[i]}']")
     end

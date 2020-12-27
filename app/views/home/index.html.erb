@@ -1,18 +1,19 @@
-<h1>Welcome to our planet</h1>
+<p class="text-2xl text-center">Welcome!</p>
 
+<div class="text-center mt-2 text-lg italic">
 Find new Animons! Collect them, classify them, give them some attention and show them to the world!
+</div>
 
-<h2>Latest content:</h2>
-<table class="latest">
+<div class="text-xl m-2">
+  Latest activity:
+</div>
+
 <% @latest_contents.each do |content| %>
   <% content_strings = strings_for_content(content) %>
-  <tr>
-    <td>
-      <%= content_strings['text'] %>
-    </td>
-    <td>
-      <%= content_strings['visual'] %>
-    </td>
-  </tr>
+    <div class="border border-black rounded-lg w-1/2 m-2 bg-gray-100">
+        <div class="p-2">
+          <%= content_strings['text'] %>
+          <%= content_strings['visual'] %>
+        </div>
+    </div>
 <% end %>
-</table>

@@ -1,33 +1,36 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Animon: <%= @animon.taxon.common_name %></h1>
+<p class="text-center text-2xl">Animon: <%= @animon.taxon.common_name %></p>
 
-<div class='identity'>
-  <h2><%= link_to 'Identity', taxon_path(@animon.taxon) %></h2>
-  <%= render 'taxons/description', taxon: @animon.taxon %>
+<div class="mt-4 mx-16 border-2 border-black bg-gray-300 rounded-lg">
+  <p class="m-2"><%= link_to 'Identity', taxon_path(@animon.taxon) %></p>
+
+  <div class="m-2">
+    <%= render 'taxons/description', taxon: @animon.taxon %>
+  </div>
 </div>
 
-<p>
+<p class="mt-2 mx-16">
   <%= link_to 'Edit', edit_animon_path(@animon) %>
   <%= link_to 'Add YouTube video', new_youtube_video_path(animon_id: @animon) %>
 </p>
 
 
-<div class='media-content' >
-  <div class='youtube-iframe'>
+<div class="mt-4 mx-2 flex flex-wrap">
+  <div class="w-1/2">
     <% unless @animon.youtube_videos.empty? %>
     <strong>Latest YouTube videos:</strong>
     <% end %>
     <% @animon.youtube_videos.each do |video| %>
-      <p>
-        <iframe src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <p class="mt-2">
+        <iframe class="w-11/12 h-64" src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </p>
     <% end %>
   </div>
 
   <% if @animon.twitter_handle.present? %>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <div class='twitter-handle-timeline'>
+  <div class="w-1/2">
     <%= link_to "Tweets by #{@animon.twitter_handle}", "https://twitter.com/#{@animon.twitter_handle}", class: 'twitter-timeline', 'data-width' => 500, 'data-height'=>1000, 'data-dnt'=>true %>
   </div>
   <% end %>

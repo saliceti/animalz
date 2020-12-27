@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<p class="text-center text-2xl">Taxon: <%= @taxon.common_name %></p>
+
+
+<div class="m-2">
+  <%= render 'description', taxon: @taxon %>
+</div>
+
+<p class="m-2">
   <%= link_to 'Edit', edit_taxon_path(@taxon) %>
   <%= link_to 'New child taxon', new_taxon_path(readonly_parent_taxon: @taxon) %>
 </p>
-
-<%= render 'description', taxon: @taxon %>

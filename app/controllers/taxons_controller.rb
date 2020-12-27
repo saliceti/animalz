@@ -63,7 +63,7 @@ class TaxonsController < ApplicationController
       buffer = form.hidden_field :parent_id, :value => @taxon.parent_id
       buffer << helpers.link_to(@taxon.parent.common_name, taxon_path(@taxon.parent))
     else
-      form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, :include_blank => "")
+      form.collection_select(:parent_id, @taxons, :id, :rank_and_common_name, {:include_blank => ""}, {class: "border w-64"})
     end
   end
 
