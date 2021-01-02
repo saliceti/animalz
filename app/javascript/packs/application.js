@@ -17,3 +17,5 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import  "../layouts/application.css";
+
+const images = require.context('../../assets/images', true)
