@@ -1,6 +1,6 @@
 class AnimonsController < ApplicationController
   before_action :set_animon, only: [:show, :edit, :update, :destroy]
-  helper_method :embed_link
+  helper_method :embed_link, :picture
 
   def index
     @animons = Animon.all
@@ -20,6 +20,7 @@ class AnimonsController < ApplicationController
 
   def create
     @animon = Animon.new(animon_params)
+    @animon.picture.attach(params[:picture])
     respond_to do |format|
       if @animon.save
         format.html { redirect_to @animon, notice: 'Animon was successfully created.' }
@@ -31,6 +32,7 @@ class AnimonsController < ApplicationController
   end
 
   def update
+    @animon.picture.attach(params[:picture])
     respond_to do |format|
       if @animon.update(animon_params)
         format.html { redirect_to @animon, notice: 'Animon was successfully updated.' }
@@ -55,11 +57,14 @@ class AnimonsController < ApplicationController
   end
 
   def animon_params
-    params.require(:animon).permit(:taxon_id, :twitter_handle)
+    params.require(:animon).permit(:taxon_id, :twitter_handle, :picture)
   end
 
   def embed_link(youtube_id)
     "https://www.youtube.com/embed/#{youtube_id}"
   end
 
+  def picture
+    helpers.image_tag(url_for(@animon.picture), class: 'mt-4 mx-2 w-64') if @animon.picture.attached?
+  end
 end

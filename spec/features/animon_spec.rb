@@ -37,6 +37,12 @@ feature 'Animon CRUD' do
     when_a_user_adds_a_twitter_handle
     then_the_twitter_content_displayed
   end
+  scenario 'Add profile picture' do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    when_a_user_adds_a_profile_picture
+    then_the_picture_is_displayed
+  end
 end
 
 def and_an_animon_is_linked_to_a_taxon
@@ -107,4 +113,14 @@ end
 def then_the_twitter_content_displayed
   embed_link = "https://twitter.com/speciestwitterhandle"
   expect(page).to have_link 'Tweets by speciestwitterhandle', href: embed_link
+end
+
+def when_a_user_adds_a_profile_picture
+  visit edit_animon_path(@animon)
+  attach_file(Rails.root.join 'app/assets/images/animon.png')
+  expect{click_button 'commit'}.to change(ActiveStorage::Attachment, :count).by(1)
+end
+
+def then_the_picture_is_displayed
+  expect(page).to have_css("img[src*='animon.png']")
 end

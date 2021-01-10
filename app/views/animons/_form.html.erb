@@ -18,6 +18,11 @@
     </p>
   </div>
 
+  <div>
+    <%= form.label :picture, 'Upload a profile picture' %>
+    <%= form.file_field :picture %>
+  </div>
+
   <div class="mt-4">
     <%= form.label :twitter_handle %>
     @<%= form.text_field :twitter_handle, class: "border" %>

@@ -1,6 +1,7 @@
 class Animon < ApplicationRecord
   belongs_to :taxon
   has_many :youtube_videos
+  has_one_attached :picture
 
   validates :taxon_id, presence: true
 
