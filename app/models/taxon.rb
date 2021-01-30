@@ -44,6 +44,10 @@ class Taxon < ApplicationRecord
       .where(animons: {taxon_id: [nil, extra_taxon]})
   end
 
+  def self.in_ranks(ranks)
+    Taxon.where(rank: ranks)
+  end
+
   def ancestors
     # Prevent infinite loop
     raise "Taxon and parent are the same: #{self.inspect}" if self == parent
