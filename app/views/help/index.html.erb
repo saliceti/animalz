@@ -32,8 +32,15 @@ you can navigate to all related taxons.
 <p class="text-xl mt-4 font-bold">Add a new animon</p>
 If your favourite animon is not there, you can add it yourself and start looking after it!
 <br/>
-Look for its scientific name and its classification. Click <%= link_to 'New taxon', new_taxon_path %> to create the classification all the way down to <b>Species</b> or <b>Subspecies</b>.
-Then you can click <%= link_to 'New animon', new_animon_path %> to create your animon and link it to the taxon!
+You will need to know its <span class="font-bold">scientific name</span> and <span class="font-bold">classification</span>. Animon can be <span class="italic">Species</span> (its parent is a Genus) or <span class="italic">Subspecies</span> (its parent is a Species).
+<br/>
+If it is already classified, select it from the drop-down menu. If not, fill in the details to create it.
+<br/>
+If the parent does not exist, click <%= link_to 'New taxon', new_taxon_path %> to create the missing classification.
+<br/>
+You can add a <span class="font-bold">profile picture</span> and event a <span class="font-bold">twitter handle</span> so all new tweets will be displayed automatically.
+<br/>
+Then you can click <%= link_to 'New animon', new_animon_path %> to create your animon!
 <br/>
 <i>Hint: there is a lot of help available online, starting with <%= link_to 'Wikipedia', 'https://www.wikipedia.org'%>.</i>
 </div>
@@ -42,5 +49,6 @@ Then you can click <%= link_to 'New animon', new_animon_path %> to create your a
 <p class="text-xl mt-4 font-bold">Add videos</p>
 There are great videos on <%= link_to 'Youtube', 'https://www.youtube.com'%>. If you find a nice one for an animon on YouTube,
 first click on <b>Share</b>, then <b>Copy</b>, next to the link.
+<br/>
 Go to the animon page and click on <b>Add YouTube video</b>. Paste the link, click <b>Create Youtube video</b>, and voilà!
 </div>
