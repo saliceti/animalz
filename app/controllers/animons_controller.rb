@@ -11,6 +11,7 @@ class AnimonsController < ApplicationController
 
   def new
     @animon = Animon.new
+    @animon.build_taxon
     @taxons = Taxon.available_species_and_subspecies
   end
 
@@ -19,8 +20,14 @@ class AnimonsController < ApplicationController
   end
 
   def create
-    @animon = Animon.new(animon_params)
+    if animon_params[:taxon_id] != ""
+      new_params = animon_params.except(:taxon_attributes)
+    else
+      new_params = animon_params.except(:taxon_id)
+    end
+    @animon = Animon.new(new_params)
     @animon.picture.attach(params[:picture])
+
     respond_to do |format|
       if @animon.save
         format.html { redirect_to @animon, notice: 'Animon was successfully created.' }
@@ -32,9 +39,15 @@ class AnimonsController < ApplicationController
   end
 
   def update
+    if animon_params[:taxon_id] != ""
+      update_params = animon_params.except(:taxon_attributes)
+    else
+      update_params = animon_params.except(:taxon_id)
+    end
+
     @animon.picture.attach(params[:picture])
     respond_to do |format|
-      if @animon.update(animon_params)
+      if @animon.update(update_params)
         format.html { redirect_to @animon, notice: 'Animon was successfully updated.' }
       else
         @taxons = Taxon.available_species_and_subspecies @animon.taxon
@@ -57,7 +70,7 @@ class AnimonsController < ApplicationController
   end
 
   def animon_params
-    params.require(:animon).permit(:taxon_id, :twitter_handle, :picture)
+    params.require(:animon).permit(:taxon_id, :twitter_handle, :picture, taxon_attributes: [:common_name, :scientific_name, :rank, :parent_id, :taxon])
   end
 
   def embed_link(youtube_id)

@@ -19,6 +19,11 @@ feature 'Animon CRUD' do
     then_it_is_displayed
     and_edit_links_are_displayed
   end
+  scenario 'Create with taxon' do
+    given_a_full_taxon_hierarchy
+    when_a_user_creates_an_animon_with_a_taxon
+    then_the_new_taxon_details_are_displayed
+  end
   scenario 'Edit' do
     given_a_full_taxon_hierarchy
     and_an_animon_is_linked_to_a_taxon
@@ -123,4 +128,23 @@ end
 
 def then_the_picture_is_displayed
   expect(page).to have_css("img[src*='animon.png']")
+end
+
+def when_a_user_creates_an_animon_with_a_taxon
+  visit new_animon_path
+  expect(page).to have_text 'Create your new animon'
+  expect(page).to have_select('animon_taxon_attributes_parent_id', with_options: ['Genus: Genus common name', 'Species: Species common name'])
+  select 'Species', from: 'animon_taxon_attributes_rank'
+  fill_in 'Common name', with: 'New species common name'
+  fill_in 'Scientific name', with: 'New species scientific name'
+  select('Genus: Genus common name', from: 'animon_taxon_attributes_parent_id')
+  expect{click_button('commit')}.to change(Animon, :count).by(1)
+    .and change(Taxon, :count).by(1)
+end
+
+def then_the_new_taxon_details_are_displayed
+  expect(page).to have_text 'Animon: New species common name'
+  expect(page).to have_text 'Scientific name: New species scientific name'
+  animon = Animon.first
+  expect(page).to have_link 'Identity', href: taxon_path(animon.taxon)
 end

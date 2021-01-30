@@ -11,12 +11,36 @@
   <% end %>
 
   <div>
-    <%= form.label :taxon_id, 'Select the species or subspecies' %>
+    <%= form.label :taxon_id, 'Select an existing species or subspecies:' %>
     <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name, {:include_blank => ""}, {:class => "border w-64"}) %>
     <p class='italic'>
-    <%= link_to 'Add species or subspecies', new_taxon_path%> if it is not here!
+    Or leave blank and create new classification below:
     </p>
   </div>
+
+  <%= form.fields_for :taxon do |taxon_form| %>
+    <div class="field mt-4">
+    <%= taxon_form.label :common_name %>
+    <%= taxon_form.text_field :common_name, class: "border" %>
+    </div>
+
+    <div class="field mt-4">
+      <%= taxon_form.label :scientific_name %>
+      <%= taxon_form.text_field :scientific_name, class: "border"  %>
+    </div>
+
+    <div class="field mt-4">
+      <%= taxon_form.label :rank %>
+      <%= taxon_form.select(:rank, ['Species', 'Subspecies'], {:include_blank => ""}, {class: "border" }) %>
+    </div>
+
+    <div class="field mt-4">
+      <%= taxon_form.label :parent_id %>
+      <%= taxon_form.collection_select(:parent_id, Taxon.in_ranks(['Genus', 'Species']), :id, :rank_and_common_name, {:include_blank => ""}, {class: "border w-64"}) %>
+    </div>
+
+  <% end %>
+
 
   <div>
     <%= form.label :picture, 'Upload a profile picture' %>
