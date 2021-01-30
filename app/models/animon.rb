@@ -3,7 +3,7 @@ class Animon < ApplicationRecord
   has_many :youtube_videos
   has_one_attached :picture
 
-  validates :taxon_id, presence: true
+  validates :taxon, presence: true
 
   def self.latest_created(quantity)
     Animon.order(:created_at).reverse_order.take quantity
