@@ -10,49 +10,53 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="flex flex-wrap">
+    <div class="mx-2 mt-4">
     <%= form.label :taxon_id, 'Select an existing species or subspecies:' %>
     <%= form.collection_select(:taxon_id, @taxons, :id, :rank_and_common_name, {:include_blank => ""}, {:class => "border w-64"}) %>
+    </div>
+
+    <div class='mx-2 mt-4 inline-block border-2 border-black bg-gray-300 rounded-lg p-2'>
     <p class='italic'>
     Or leave blank and create new classification below:
     </p>
-  </div>
+      <%= form.fields_for :taxon do |taxon_form| %>
+      <div class="field m-2">
+      <%= taxon_form.label :common_name %>
+      <%= taxon_form.text_field :common_name, class: "border" %>
+      </div>
 
-  <%= form.fields_for :taxon do |taxon_form| %>
-    <div class="field mt-4">
-    <%= taxon_form.label :common_name %>
-    <%= taxon_form.text_field :common_name, class: "border" %>
-    </div>
-
-    <div class="field mt-4">
+      <div class="field m-2">
       <%= taxon_form.label :scientific_name %>
       <%= taxon_form.text_field :scientific_name, class: "border"  %>
-    </div>
+      </div>
 
-    <div class="field mt-4">
+      <div class="field m-2">
       <%= taxon_form.label :rank %>
       <%= taxon_form.select(:rank, ['Species', 'Subspecies'], {:include_blank => ""}, {class: "border" }) %>
-    </div>
+      </div>
 
-    <div class="field mt-4">
+      <div class="field m-2">
       <%= taxon_form.label :parent_id %>
       <%= taxon_form.collection_select(:parent_id, Taxon.in_ranks(['Genus', 'Species']), :id, :rank_and_common_name, {:include_blank => ""}, {class: "border w-64"}) %>
+      </div>
+
+      <% end %>
     </div>
+  </div>
 
-  <% end %>
 
-
-  <div>
-    <%= form.label :picture, 'Upload a profile picture' %>
+  <div class="mt-4 mx-2">
+    <%= form.label :picture, 'Upload a profile picture:' %>
     <%= form.file_field :picture %>
   </div>
 
-  <div class="mt-4">
+  <div class="mt-4 mx-2">
     <%= form.label :twitter_handle %>
     @<%= form.text_field :twitter_handle, class: "border" %>
   </div>
 
-  <div class="actions mt-4">
+  <div class="actions mt-4 mx-2">
     <%= form.submit %>
   </div>
 
