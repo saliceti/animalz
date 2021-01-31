@@ -8,7 +8,7 @@ class TaxonsController < ApplicationController
       @page_title = "#{params[:rank]} list"
     else
       @taxons = Taxon.all
-      @page_title = "All taxons"
+      @page_title = "Taxonomy"
     end
   end
 

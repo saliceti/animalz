@@ -2,8 +2,4 @@
 
 <ul>
   <li><%= link_to '📖 All animons', animons_path, class: "ml-2 text-xl no-underline" %></li>
-  <li><%= link_to '📖 All taxons', taxons_path, class: "ml-2 text-xl no-underline" %></li>
-  <% Taxon::RANKS.each do |rank| %>
-  <li><%= link_to "📖 By #{rank}", taxons_path(rank: rank), class: "ml-2 text-xl no-underline" %></li>
-  <% end %>
 </ul>

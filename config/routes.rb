@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   get 'browse/index'
   get 'help/index'
+  get 'taxonomy/index'
 end
