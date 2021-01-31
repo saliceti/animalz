@@ -35,7 +35,7 @@ def and_the_menus_are_displayed
   expect(page).to have_link('Home', href: root_path)
   expect(page).to have_link('Anidex', href: browse_index_path)
   expect(page).to have_link('New animon', href: new_animon_path)
-  expect(page).to have_link('New taxon', href: new_taxon_path)
+  expect(page).to have_link('Taxonomy', href: new_taxon_path)
   expect(page).to have_link('Help', href: help_index_path)
 end
 
