@@ -11,6 +11,7 @@ def scenario_select_taxon_rank(rank)
     when_a_user_visits_the_taxonomy_page
     and_the_user_clicks_on_rank rank
     then_the_list_only_contains_rank rank
+    and_there_is_a_new_taxon_link_for_rank rank
   end
 end
 
@@ -65,4 +66,8 @@ def then_the_list_only_contains_rank(rank)
   expect(page).to have_text "#{rank} common name"
   different_rank = Taxon::RANKS.select{|r| r != rank}.first
   expect(page).not_to have_text "#{different_rank} common name"
+end
+
+def and_there_is_a_new_taxon_link_for_rank(rank)
+  expect(page).to have_link("Add new #{rank}", href: new_taxon_path(rank: rank))
 end

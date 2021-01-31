@@ -22,7 +22,7 @@
 
   <div class="field mt-4">
     <%= form.label :rank %>
-    <%= form.select(:rank, Taxon::RANKS, {:include_blank => ""}, {class: "border" }) %>
+    <%= rank_field(form) %>
   </div>
 
   <div class="field mt-4">

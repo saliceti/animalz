@@ -21,3 +21,7 @@
     <% end %>
   </tbody>
 </table>
+
+<% if defined?(@rank) %>
+<%= link_to "Add new #{@rank}", new_taxon_path(rank: @rank) %>
+<% end %>
