@@ -26,7 +26,7 @@ class AnimonsController < ApplicationController
       new_params = animon_params.except(:taxon_id)
     end
     @animon = Animon.new(new_params)
-    @animon.picture.attach(params[:picture])
+    @animon.picture.attach(new_params[:picture])
 
     respond_to do |format|
       if @animon.save
@@ -45,7 +45,7 @@ class AnimonsController < ApplicationController
       update_params = animon_params.except(:taxon_id)
     end
 
-    @animon.picture.attach(params[:picture])
+    @animon.picture.attach(update_params[:picture])
     respond_to do |format|
       if @animon.update(update_params)
         format.html { redirect_to @animon, notice: 'Animon was successfully updated.' }
