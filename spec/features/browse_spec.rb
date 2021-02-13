@@ -19,28 +19,48 @@ feature 'Browse' do
     then_the_animon_is_listed
   end
 
-end
+  scenario "All animon pictures" do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    and_the_animon_has_a_picture
+    when_a_user_visits_the_browse_page
+    then_the_picture_is_displayed
+  end
 
-def when_a_user_visits_the_browse_page
-  visit browse_index_path
-end
+  def when_a_user_visits_the_browse_page
+    visit browse_index_path
+  end
 
-def then_the_browse_title_is_displayed
-  expect(page).to have_text('Browse all Animons')
-end
+  def then_the_browse_title_is_displayed
+    expect(page).to have_text('Browse all Animons')
+  end
 
 
-def and_an_animon_is_linked_to_a_taxon
-  species = Taxon.where(rank: 'Species').first
-  @animon = Animon.new(taxon: species)
-  @animon.save
-end
+  def and_an_animon_is_linked_to_a_taxon
+    species = Taxon.where(rank: 'Species').first
+    @animon = Animon.new(taxon: species)
+    @animon.save
+  end
 
-def and_the_user_clicks_on_all_animons
-  click_on 'All animons'
-end
+  def and_the_user_clicks_on_all_animons
+    click_on 'All animons'
+  end
 
-def then_the_animon_is_listed
-  expect(page).to have_link @animon.taxon.common_name, href: animon_path(@animon)
-  expect(page).to have_link "#{@animon.taxon.rank}: #{@animon.taxon.scientific_name}", href: taxon_path(@animon.taxon)
+  def then_the_animon_is_listed
+    expect(page).to have_link @animon.taxon.common_name, href: animon_path(@animon)
+    expect(page).to have_link "#{@animon.taxon.rank}: #{@animon.taxon.scientific_name}", href: taxon_path(@animon.taxon)
+  end
+
+  def and_the_animon_has_a_picture
+    @animon = Animon.first
+    @animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
+  end
+
+  def then_the_picture_is_displayed
+    within('div', class: 'animon_all') do
+      expect(page).to have_css("img[src*='animon.png']")
+      expect(page).to have_link(href: animon_path(@animon))
+    end
+  end
+
 end

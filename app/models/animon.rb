@@ -10,4 +10,7 @@ class Animon < ApplicationRecord
     Animon.order(:created_at).reverse_order.take quantity
   end
 
+  def self.random_animons_with_picture(quantity)
+    Animon.joins(:picture_attachment).limit(quantity).order("RANDOM()")
+  end
 end
