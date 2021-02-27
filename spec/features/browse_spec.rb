@@ -33,6 +33,12 @@ feature 'Browse' do
     then_the_order_is_different
   end
 
+  scenario "Latest animons" do
+    given_many_animons_with_picture
+    when_a_user_visits_the_browse_page
+    then_only_the_latest_animons_are_displayed
+  end
+
   def when_a_user_visits_the_browse_page
     visit browse_index_path
   end
@@ -94,5 +100,11 @@ feature 'Browse' do
 
   def then_the_order_is_different
     expect(@links_0).not_to eq(@links_1)
+  end
+
+  def then_only_the_latest_animons_are_displayed
+    expected_names = Animon.last(5).reverse.map{|a| a.taxon.common_name}
+    latest_names_on_page = link_texts_in_div('animon_latest')
+    expect(latest_names_on_page).to eq(expected_names)
   end
 end

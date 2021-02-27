@@ -1,11 +1,25 @@
 <p class="text-2xl text-center">Browse all Animons</p>
 
-<%= link_to '📖 All animons', animons_path, class: "ml-2 text-xl no-underline" %>
-<div class="animon_all flex flex-wrap">
-  <% @animon_all.each do |animon| %>
-    <div>
-      <div><%= link_to image_tag(url_for(animon.picture), class: 'mt-4 mx-2 h-32'), animon %></div>
-      <div class='text-center'><%= link_to animon.taxon.common_name, animon %></div>
-    </div>
-  <% end %>
+<div class="mt-8">
+  <%= link_to '📖 All animons', animons_path, class: "ml-2 text-xl no-underline" %>
+  <div class="animon_all flex flex-wrap">
+    <% @animon_random.each do |animon| %>
+      <div>
+        <div><%= link_to image_tag(url_for(animon.picture), class: 'mx-2 h-32'), animon %></div>
+        <div class='text-center'><%= link_to animon.taxon.common_name, animon %></div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="mt-8">
+  <%= link_to '📖 Latest animons', animons_path, class: "ml-2 text-xl no-underline" %>
+  <div class="animon_latest flex flex-wrap">
+    <% @animon_latest.each do |animon| %>
+      <div>
+        <div><%= link_to image_tag(url_for(animon.picture), class: 'mt-4 mx-2 h-32'), animon %></div>
+        <div class='text-center'><%= link_to animon.taxon.common_name, animon %></div>
+      </div>
+    <% end %>
+  </div>
 </div>
