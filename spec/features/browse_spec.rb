@@ -19,12 +19,18 @@ feature 'Browse' do
     then_the_animon_is_listed
   end
 
-  scenario "All animon pictures" do
+  scenario "All animons - Picture and link" do
     given_a_full_taxon_hierarchy
     and_an_animon_is_linked_to_a_taxon
     and_the_animon_has_a_picture
     when_a_user_visits_the_browse_page
     then_the_picture_is_displayed
+  end
+
+  scenario "All animons - Random" do
+    given_many_animons_with_picture
+    when_a_user_visits_the_browse_page_twice
+    then_the_order_is_different
   end
 
   def when_a_user_visits_the_browse_page
@@ -63,4 +69,30 @@ feature 'Browse' do
     end
   end
 
+  def given_many_animons_with_picture
+    genus = create(:genus)
+    10.times {
+      species = create(:species)
+      animon = create(:animon, taxon: species)
+      animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
+    }
+  end
+
+  def link_texts_in_div(div)
+    within('div', class: div) do
+      return page.all(:css, 'a').filter_map{|a| a.text unless a.text.blank?}
+    end
+  end
+
+  def when_a_user_visits_the_browse_page_twice
+    visit browse_index_path
+    @links_0 = link_texts_in_div('animon_all')
+
+    visit browse_index_path
+    @links_1 = link_texts_in_div('animon_all')
+  end
+
+  def then_the_order_is_different
+    expect(@links_0).not_to eq(@links_1)
+  end
 end
