@@ -39,6 +39,14 @@ feature 'Browse' do
     then_only_the_latest_animons_are_displayed
   end
 
+  scenario "Latest animons - Click" do
+    given_many_animons_with_picture
+    when_a_user_visits_the_browse_page
+    and_clicks_latest_animons
+    then_animons_are_listed_in_reverse_chronological_order
+    and_the_title_is_latest_animons
+  end
+
   def when_a_user_visits_the_browse_page
     visit browse_index_path
   end
@@ -106,5 +114,28 @@ feature 'Browse' do
     expected_names = Animon.last(5).reverse.map{|a| a.taxon.common_name}
     latest_names_on_page = link_texts_in_div('animon_latest')
     expect(latest_names_on_page).to eq(expected_names)
+  end
+
+  def and_clicks_latest_animons
+    click_on 'Latest animons'
+  end
+
+  def then_animons_are_listed_in_reverse_chronological_order
+    expect(page.current_path).to eq(animons_path)
+    animon_ids = nil
+    within('div', class: 'animon_list') do
+      animon_ids = page.all(:css, 'a')
+        .filter_map{|a|
+          if a[:href].starts_with? animons_path
+            a[:href].delete_prefix("#{animons_path}/").to_i
+          end
+        }
+    end
+    expected_ids = Animon.all.reverse.map{|a| a.id}
+    expect(animon_ids).to eq(expected_ids)
+  end
+
+  def and_the_title_is_latest_animons
+    expect(page).to have_css('.animon-title', text: 'Latest animons')
   end
 end

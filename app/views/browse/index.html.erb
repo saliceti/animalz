@@ -13,7 +13,7 @@
 </div>
 
 <div class="mt-8">
-  <%= link_to '📖 Latest animons', animons_path, class: "ml-2 text-xl no-underline" %>
+  <%= link_to '📖 Latest animons', animons_path(list: :latest), class: "ml-2 text-xl no-underline" %>
   <div class="animon_latest flex flex-wrap">
     <% @animon_latest.each do |animon| %>
       <div>

@@ -6,8 +6,12 @@ class Animon < ApplicationRecord
 
   validates :taxon, presence: true
 
-  def self.latest_created(quantity)
-    Animon.order(:created_at).reverse_order.take quantity
+  def self.latest_created(quantity = nil)
+    if quantity
+      Animon.order(:created_at).reverse_order.take quantity
+    else
+      Animon.order(:created_at).reverse_order
+    end
   end
 
   def self.random_animons_with_picture(quantity)

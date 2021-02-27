@@ -1,21 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p class="text-center text-2xl">All animons</p>
+<p class="animon-title text-center text-2xl"><%= @page_title %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Common name</th>
-      <th>Classification</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @animons.each do |animon| %>
+<div class="animon_list">
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to animon.taxon.common_name, animon %></td>
-        <td><%= link_to "#{animon.taxon.rank}: #{animon.taxon.scientific_name}", animon.taxon %></td>
+        <th>Common name</th>
+        <th>Classification</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @animons.each do |animon| %>
+        <tr>
+          <td><%= link_to animon.taxon.common_name, animon %></td>
+          <td><%= link_to "#{animon.taxon.rank}: #{animon.taxon.scientific_name}", animon.taxon %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -3,7 +3,13 @@ class AnimonsController < ApplicationController
   helper_method :embed_link, :picture
 
   def index
-    @animons = Animon.all
+    if params[:list] == "latest"
+      @animons = Animon.latest_created
+      @page_title = "Latest animons"
+    else
+      @animons = Animon.all
+      @page_title = "All animons"
+    end
   end
 
   def show
