@@ -6,6 +6,10 @@ class AnimonsController < ApplicationController
     if params[:list] == "latest"
       @animons = Animon.latest_created
       @page_title = "Latest animons"
+    elsif !params[:taxon].empty?
+      taxon = Taxon.find(params[:taxon])
+      @animons = Animon.all_animons_in_taxon taxon
+      @page_title = "#{taxon.common_name}s"
     else
       @animons = Animon.all
       @page_title = "All animons"

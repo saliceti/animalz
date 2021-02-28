@@ -23,3 +23,17 @@
     <% end %>
   </div>
 </div>
+
+<% @phyla.each do |phylum, animons| %>
+  <div class="mt-8">
+    <%= link_to "📖 #{phylum.common_name.capitalize}s", animons_path(taxon: phylum), class: "ml-2 text-xl no-underline" %>
+    <div class="phylum_<%= phylum.id %> flex flex-wrap">
+      <% animons.each do |animon| %>
+        <div>
+          <div><%= link_to image_tag(url_for(animon.picture), class: 'mt-4 mx-2 h-32'), animon %></div>
+          <div class='text-center'><%= link_to animon.taxon.common_name, animon %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -47,6 +47,21 @@ feature 'Browse' do
     and_the_title_is_latest_animons
   end
 
+  scenario "Top ranks" do
+    given_animons_with_picture_in_5_top_ranks
+    when_a_user_visits_the_browse_page
+    there_is_a_section_for_each_top_rank
+    and_each_section_contains_only_animons_in_this_top_rank
+  end
+
+  scenario "Top ranks - Click" do
+    given_animons_with_picture_in_5_top_ranks
+    when_a_user_visits_the_browse_page
+    and_clicks_on_a_phylum
+    then_all_animons_in_this_phylum_are_listed
+    and_the_title_is_the_phylum
+  end
+
   def when_a_user_visits_the_browse_page
     visit browse_index_path
   end
@@ -120,16 +135,19 @@ feature 'Browse' do
     click_on 'Latest animons'
   end
 
+  def extract_animon_ids
+    page.all(:css, 'a').filter_map{ |a|
+      if (!a.text.blank? && a[:href].starts_with?(animons_path) )
+        a[:href].delete_prefix("#{animons_path}/").to_i
+      end
+    }
+  end
+
   def then_animons_are_listed_in_reverse_chronological_order
     expect(page.current_path).to eq(animons_path)
     animon_ids = nil
     within('div', class: 'animon_list') do
-      animon_ids = page.all(:css, 'a')
-        .filter_map{|a|
-          if a[:href].starts_with? animons_path
-            a[:href].delete_prefix("#{animons_path}/").to_i
-          end
-        }
+      animon_ids = extract_animon_ids
     end
     expected_ids = Animon.all.reverse.map{|a| a.id}
     expect(animon_ids).to eq(expected_ids)
@@ -137,5 +155,59 @@ feature 'Browse' do
 
   def and_the_title_is_latest_animons
     expect(page).to have_css('.animon-title', text: 'Latest animons')
+  end
+
+  def given_animons_with_picture_in_5_top_ranks
+    @phyla = {}
+    5.times {
+      phylum = create(:phylum)
+      @phyla[phylum] = []
+      10.times {
+        species = create(:species, parent: phylum)
+        animon = create(:animon, taxon: species)
+        animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
+        @phyla[phylum] << animon
+      }
+    }
+  end
+
+  def there_is_a_section_for_each_top_rank
+    @phyla.keys.each do |p|
+      expect(page).to have_text("#{p.common_name.capitalize}s")
+    end
+  end
+
+  def and_each_section_contains_only_animons_in_this_top_rank
+    animon_ids = []
+    @phyla.each do |p,animons|
+      within('div', class: "phylum_#{p.id}") do
+        animon_ids = extract_animon_ids
+      end
+      animon_ids.each do |animon_id|
+        animon = Animon.find(animon_id)
+        expect(animons).to include(animon)
+      end
+    end
+  end
+
+  def and_clicks_on_a_phylum
+    phylum, animons = @phyla.first
+    click_on "📖 #{phylum.common_name.capitalize}s"
+  end
+
+  def then_all_animons_in_this_phylum_are_listed
+    expect(page.current_path).to eq(animons_path)
+    animon_ids = nil
+    within('div', class: 'animon_list') do
+      animon_ids = extract_animon_ids
+    end
+    phylum, animons = @phyla.first
+    expected_ids = animons.map{|a| a.id}
+    expect(animon_ids).to eq(expected_ids)
+  end
+
+  def and_the_title_is_the_phylum
+    phylum, animons = @phyla.first
+    expect(page).to have_css('.animon-title', text: "#{phylum.common_name.capitalize}s")
   end
 end

@@ -28,6 +28,16 @@ class Taxon < ApplicationRecord
     Taxon::RANKS.index(rank) == 0
   end
 
+  def children_at_ranks(children_ranks)
+    result_array = []
+    children.each do |c|
+      result_array.append(c) if children_ranks.include? c.rank
+      grand_children = c.children_at_ranks(children_ranks)
+      result_array = result_array.concat(grand_children) unless grand_children.empty?
+    end
+    return result_array
+  end
+
   def self.select_rank(rank)
     raise "Unknown rank '#{rank}'" unless RANKS.include? rank
     Taxon.where(rank: rank)
