@@ -3,10 +3,10 @@ class AnimonsController < ApplicationController
   helper_method :embed_link, :picture
 
   def index
-    if params[:list] == "latest"
+    if (params.has_key? :list) && (params[:list] == "latest")
       @animons = Animon.latest_created
       @page_title = "Latest animons"
-    elsif !params[:taxon].empty?
+    elsif params.has_key? :taxon
       taxon = Taxon.find(params[:taxon])
       @animons = Animon.all_animons_in_taxon taxon
       @page_title = "#{taxon.common_name}s"
