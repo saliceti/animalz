@@ -83,7 +83,6 @@ feature 'Browse' do
 
   def then_the_animon_is_listed
     expect(page).to have_link @animon.taxon.common_name, href: animon_path(@animon)
-    expect(page).to have_link "#{@animon.taxon.rank}: #{@animon.taxon.scientific_name}", href: taxon_path(@animon.taxon)
   end
 
   def and_the_animon_has_a_picture

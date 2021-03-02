@@ -4,18 +4,17 @@
 
 <div class="animon_list">
   <table>
-    <thead>
-      <tr>
-        <th>Common name</th>
-        <th>Classification</th>
-      </tr>
-    </thead>
-
     <tbody>
       <% @animons.each do |animon| %>
         <tr>
-          <td><%= link_to animon.taxon.common_name, animon %></td>
-          <td><%= link_to "#{animon.taxon.rank}: #{animon.taxon.scientific_name}", animon.taxon %></td>
+          <td>
+            <% if animon.picture.attached? %>
+              <%= link_to(image_tag(url_for(animon.picture), class: 'mx-2 w-16 h-16 object-contain'), animon) %>
+            <% else %>
+              <div class='mx-2 w-16 h-16'></div>
+            <% end %>
+          </td>
+          <td><%= link_to( animon.taxon.common_name, animon, class: 'text-xl') %></td>
         </tr>
       <% end %>
     </tbody>
