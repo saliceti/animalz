@@ -3,20 +3,14 @@
 <p class="animon-title text-center text-2xl"><%= @page_title %></p>
 
 <div class="animon_list">
-  <table>
-    <tbody>
-      <% @animons.each do |animon| %>
-        <tr>
-          <td>
-            <% if animon.picture.attached? %>
-              <%= link_to(image_tag(url_for(animon.picture), class: 'mx-2 w-16 h-16 object-contain'), animon) %>
-            <% else %>
-              <div class='mx-2 w-16 h-16'></div>
-            <% end %>
-          </td>
-          <td><%= link_to( animon.taxon.common_name, animon, class: 'text-xl') %></td>
-        </tr>
+  <% @animons.each do |animon| %>
+    <div class="flex flex-wrap items-center">
+      <% if animon.picture.attached? %>
+        <div><%= link_to(image_tag(url_for(animon.picture), class: 'mx-2 w-16 h-16 object-contain'), animon) %></div>
+      <% else %>
+        <div class='mx-2 w-16 h-16'></div>
       <% end %>
-    </tbody>
-  </table>
+      <div><%= link_to( animon.taxon.common_name, animon, class: 'text-xl') %></div>
+    </div>
+  <% end %>
 </div>
