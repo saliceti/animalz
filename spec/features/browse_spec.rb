@@ -47,6 +47,12 @@ feature 'Browse' do
     and_a_section_for_each_child_taxon
   end
 
+  scenario "Empty taxon" do
+    given_a_taxon_with_no_animon
+    when_a_user_visits_the_browse_page
+    the_taxon_section_is_not_there
+  end
+
   def when_a_user_visits_the_browse_page
     visit browse_index_path
   end
@@ -204,4 +210,11 @@ feature 'Browse' do
     end
   end
 
+  def given_a_taxon_with_no_animon
+    create(:phylum)
+  end
+
+  def the_taxon_section_is_not_there
+    expect(page).not_to have_link("📖 Phylum")
+  end
 end

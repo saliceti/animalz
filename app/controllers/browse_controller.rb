@@ -42,10 +42,12 @@ class BrowseController < ApplicationController
   def animons_in_taxons(taxons)
     animons_in_view = []
     taxons.each do |t|
+      animon_list = Animon.random_animons_with_picture_in_taxon(QUANTITY, t)
+      next if animon_list.empty?
       animons_in_view << {
         class: "taxon_#{t.id}",
         link: helpers.link_to("📖 #{t.rank}: #{t.common_name.capitalize}s", browse_index_path(taxon: t), class: LINK_CLASS),
-        list: Animon.random_animons_with_picture_in_taxon(QUANTITY, t)
+        list: animon_list
       }
     end
     animons_in_view
