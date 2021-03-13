@@ -33,6 +33,13 @@ class Animon < ApplicationRecord
     ).limit(quantity).order("RANDOM()")
   end
 
+  def self.latest_animons_with_picture_in_taxon(quantity, taxon)
+    species_and_subspecies = taxon.children_at_ranks(["Species", "Subspecies"])
+    @animons = Animon.joins(:taxon, :picture_attachment).where(
+      taxons: { id: species_and_subspecies.map{|t| t.id} }
+    ).order(:created_at).reverse_order.take quantity
+  end
+
   def self.all_animons_in_taxon(taxon)
     species_and_subspecies = taxon.children_at_ranks(["Species", "Subspecies"])
     @animons = Animon.joins(:taxon).where(

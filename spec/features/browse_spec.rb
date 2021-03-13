@@ -39,12 +39,12 @@ feature 'Browse' do
     and_each_section_contains_only_animons_in_this_top_rank
   end
 
-  scenario "Top ranks - Click" do
-    given_animons_with_picture_in_5_top_ranks
-    when_a_user_visits_the_browse_page
-    and_clicks_on_a_phylum
-    then_all_animons_in_this_phylum_are_listed
-    and_the_title_is_the_phylum
+  scenario "Taxon" do
+    given_animons_with_picture_in_5_sub_ranks
+    when_a_user_browses_a_taxon
+    then_there_is_a_section_for_all_animons_in_this_taxon
+    and_there_is_a_section_for_latest_animons_in_this_taxon
+    and_a_section_for_each_child_taxon
   end
 
   def when_a_user_visits_the_browse_page
@@ -128,14 +128,14 @@ feature 'Browse' do
 
   def there_is_a_section_for_each_top_rank
     @phyla.keys.each do |p|
-      expect(page).to have_link("#{p.common_name.capitalize}s", href: animons_path(taxon: p))
+      expect(page).to have_link("#{p.common_name.capitalize}s", href: browse_index_path(taxon: p))
     end
   end
 
   def and_each_section_contains_only_animons_in_this_top_rank
     animon_ids = []
     @phyla.each do |p,animons|
-      within('div', class: "phylum_#{p.id}") do
+      within('div', class: "taxon_#{p.id}") do
         animon_ids = extract_animon_ids
       end
       animon_ids.each do |animon_id|
@@ -145,24 +145,63 @@ feature 'Browse' do
     end
   end
 
-  def and_clicks_on_a_phylum
-    phylum, animons = @phyla.first
-    click_on "📖 #{phylum.common_name.capitalize}s"
+  def given_animons_with_picture_in_5_sub_ranks
+    @phylum = create(:phylum)
+    @classes = {}
+    5.times {
+      @class_taxon = create(:class, parent: @phylum)
+      @classes[@class_taxon] = []
+      5.times {
+        species = create(:species, parent: @class_taxon)
+        animon = create(:animon, taxon: species)
+        animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
+        @classes[@class_taxon] << animon
+      }
+    }
+
+    # Animons not in phylum
+    10.times{
+      animon = create(:animon)
+      animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
+    }
   end
 
-  def then_all_animons_in_this_phylum_are_listed
-    expect(page.current_path).to eq(animons_path)
-    animon_ids = nil
-    within('div', class: 'animon_list') do
+  def when_a_user_browses_a_taxon
+    visit browse_index_path(taxon: @phylum)
+  end
+
+  def then_there_is_a_section_for_all_animons_in_this_taxon
+    expect(page).to have_link("📖 All animons in Phylum #{@phylum.common_name}", href: animons_path(taxon: @phylum))
+    animon_ids = []
+    within('div', class: "animon_all") do
       animon_ids = extract_animon_ids
     end
-    phylum, animons = @phyla.first
-    expected_ids = animons.map{|a| a.id}
-    expect(animon_ids).to eq(expected_ids)
+    animon_ids.each do |animon_id|
+      animon = Animon.find(animon_id)
+      animons_in_phylum = @classes.flat_map{|c,a| a}
+      expect(animons_in_phylum).to include(animon)
+    end
   end
 
-  def and_the_title_is_the_phylum
-    phylum, animons = @phyla.first
-    expect(page).to have_css('.animon-title', text: "#{phylum.common_name.capitalize}s")
+  def and_there_is_a_section_for_latest_animons_in_this_taxon
+    expect(page).to have_link("📖 Latest animons in Phylum #{@phylum.common_name}", href: animons_path(taxon: @phylum, list: "latest"))
+    expected_names = @classes[@class_taxon].reverse.map{|a| a.taxon.common_name}
+    latest_names_on_page = link_texts_in_div('animon_latest')
+    expect(latest_names_on_page).to eq(expected_names)
   end
+
+  def and_a_section_for_each_child_taxon
+    animon_ids = []
+    @classes.each do |c, animons|
+      expect(page).to have_link("📖 Class: #{c.common_name.capitalize}s", href: browse_index_path(taxon: c))
+      within('div', class: "taxon_#{c.id}") do
+        animon_ids = extract_animon_ids
+      end
+      animon_ids.each do |animon_id|
+        animon = Animon.find(animon_id)
+        expect(animons).to include(animon)
+      end
+    end
+  end
+
 end
