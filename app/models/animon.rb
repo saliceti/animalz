@@ -6,6 +6,10 @@ class Animon < ApplicationRecord
 
   validates :taxon, presence: true
 
+  def self.all_ordered_by_common_name
+    Animon.joins(:taxon).order(:common_name)
+  end
+
   def self.latest_created(quantity = nil)
     if quantity
       Animon.order(:created_at).reverse_order.take quantity

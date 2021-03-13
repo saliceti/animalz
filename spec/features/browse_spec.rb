@@ -11,20 +11,13 @@ feature 'Browse' do
     then_the_browse_title_is_displayed
   end
 
-  scenario "All animons" do
-    given_a_full_taxon_hierarchy
-    and_an_animon_is_linked_to_a_taxon
-    when_a_user_visits_the_browse_page
-    and_the_user_clicks_on_all_animons
-    then_the_animon_is_listed
-  end
-
   scenario "All animons - Picture and link" do
     given_a_full_taxon_hierarchy
     and_an_animon_is_linked_to_a_taxon
     and_the_animon_has_a_picture
     when_a_user_visits_the_browse_page
     then_the_picture_is_displayed
+    and_there_is_a_link_to_all_animons
   end
 
   scenario "All animons - Random" do
@@ -37,14 +30,6 @@ feature 'Browse' do
     given_many_animons_with_picture
     when_a_user_visits_the_browse_page
     then_only_the_latest_animons_are_displayed
-  end
-
-  scenario "Latest animons - Click" do
-    given_many_animons_with_picture
-    when_a_user_visits_the_browse_page
-    and_clicks_latest_animons
-    then_animons_are_listed_in_reverse_chronological_order
-    and_the_title_is_latest_animons
   end
 
   scenario "Top ranks" do
@@ -77,14 +62,6 @@ feature 'Browse' do
     @animon.save
   end
 
-  def and_the_user_clicks_on_all_animons
-    click_on 'All animons'
-  end
-
-  def then_the_animon_is_listed
-    expect(page).to have_link @animon.taxon.common_name, href: animon_path(@animon)
-  end
-
   def and_the_animon_has_a_picture
     @animon = Animon.first
     @animon.picture.attach(io: File.open(Rails.root.join 'app/assets/images/animon.png'), filename:'animon.png')
@@ -95,6 +72,10 @@ feature 'Browse' do
       expect(page).to have_css("img[src*='animon.png']")
       expect(page).to have_link(href: animon_path(@animon))
     end
+  end
+
+  def and_there_is_a_link_to_all_animons
+    expect(page).to have_link("📖 All animons", href: animons_path)
   end
 
   def given_many_animons_with_picture
@@ -125,35 +106,10 @@ feature 'Browse' do
   end
 
   def then_only_the_latest_animons_are_displayed
+    expect(page).to have_link("📖 Latest animons", href: animons_path(list: "latest"))
     expected_names = Animon.last(5).reverse.map{|a| a.taxon.common_name}
     latest_names_on_page = link_texts_in_div('animon_latest')
     expect(latest_names_on_page).to eq(expected_names)
-  end
-
-  def and_clicks_latest_animons
-    click_on 'Latest animons'
-  end
-
-  def extract_animon_ids
-    page.all(:css, 'a').filter_map{ |a|
-      if (!a.text.blank? && a[:href].starts_with?(animons_path) )
-        a[:href].delete_prefix("#{animons_path}/").to_i
-      end
-    }
-  end
-
-  def then_animons_are_listed_in_reverse_chronological_order
-    expect(page.current_path).to eq(animons_path)
-    animon_ids = nil
-    within('div', class: 'animon_list') do
-      animon_ids = extract_animon_ids
-    end
-    expected_ids = Animon.all.reverse.map{|a| a.id}
-    expect(animon_ids).to eq(expected_ids)
-  end
-
-  def and_the_title_is_latest_animons
-    expect(page).to have_css('.animon-title', text: 'Latest animons')
   end
 
   def given_animons_with_picture_in_5_top_ranks
@@ -172,7 +128,7 @@ feature 'Browse' do
 
   def there_is_a_section_for_each_top_rank
     @phyla.keys.each do |p|
-      expect(page).to have_text("#{p.common_name.capitalize}s")
+      expect(page).to have_link("#{p.common_name.capitalize}s", href: animons_path(taxon: p))
     end
   end
 

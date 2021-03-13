@@ -11,7 +11,7 @@ class AnimonsController < ApplicationController
       @animons = Animon.all_animons_in_taxon taxon
       @page_title = "#{taxon.common_name}s"
     else
-      @animons = Animon.all
+      @animons = Animon.all_ordered_by_common_name
       @page_title = "All animons"
     end
   end

@@ -48,6 +48,17 @@ feature 'Animon CRUD' do
     when_a_user_adds_a_profile_picture
     then_the_picture_is_displayed
   end
+  scenario "All animons" do
+    given_many_animons
+    when_the_user_visits_all_animons
+    then_the_animons_are_listed_in_alphabetical_order
+  end
+  scenario 'Latest animons' do
+    given_many_animons
+    when_user_visits_latest_animons
+    then_animons_are_listed_in_reverse_chronological_order
+    and_the_title_is_latest_animons
+  end
 end
 
 def and_an_animon_is_linked_to_a_taxon
@@ -147,4 +158,42 @@ def then_the_new_taxon_details_are_displayed
   expect(page).to have_text 'Scientific name: New species scientific name'
   animon = Animon.first
   expect(page).to have_link 'Identity', href: taxon_path(animon.taxon)
+end
+
+def given_many_animons
+  genus = create(:genus)
+  10.times {
+    species = create(:species)
+    animon = create(:animon, taxon: species)
+  }
+end
+
+def when_the_user_visits_all_animons
+  visit animons_path
+end
+
+def then_the_animons_are_listed_in_alphabetical_order
+  animon_ids = nil
+  within('div', class: 'animon_list') do
+    animon_ids = extract_animon_ids
+  end
+  expected_ids = Animon.joins(:taxon).all.order(:common_name).map{|a| a.id}
+  expect(animon_ids).to eq(expected_ids)
+end
+
+def when_user_visits_latest_animons
+  visit animons_path(list: "latest")
+end
+
+def then_animons_are_listed_in_reverse_chronological_order
+  animon_ids = nil
+  within('div', class: 'animon_list') do
+    animon_ids = extract_animon_ids
+  end
+  expected_ids = Animon.all.reverse.map{|a| a.id}
+  expect(animon_ids).to eq(expected_ids)
+end
+
+def and_the_title_is_latest_animons
+  expect(page).to have_css('.animon-title', text: 'Latest animons')
 end

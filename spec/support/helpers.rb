@@ -12,4 +12,13 @@ module Helpers
   def cbdriver
     Capybara.current_session.driver
   end
+
+  def extract_animon_ids
+    page.all(:css, 'a').filter_map{ |a|
+      if (!a.text.blank? && a[:href].starts_with?(animons_path) )
+        a[:href].delete_prefix("#{animons_path}/").to_i
+      end
+    }
+  end
+
 end
