@@ -21,6 +21,12 @@
   <%= taxon.scientific_name %>
 </p>
 
+
+<p>
+  <strong>Wikipedia:</strong>
+  <%= link_to taxon.wikipedia_page, taxon.wikipedia_page %>
+</p>
+
 <p>
   <% unless taxon.children.empty? %>
   <strong>Child taxons:</strong>
