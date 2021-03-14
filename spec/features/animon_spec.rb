@@ -27,8 +27,15 @@ feature 'Animon CRUD' do
   scenario 'Edit' do
     given_a_full_taxon_hierarchy
     and_an_animon_is_linked_to_a_taxon
-    when_a_user_edits_an_animon
+    when_a_user_is_on_the_edit_form
+    and_a_user_edits_an_animon
     then_it_is_updated
+  end
+  scenario 'Edit taxon link' do
+    given_a_full_taxon_hierarchy
+    and_an_animon_is_linked_to_a_taxon
+    when_a_user_is_on_the_edit_form
+    then_there_is_a_link_to_edit_the_taxon
   end
   scenario 'Delete' do
     given_a_full_taxon_hierarchy
@@ -99,8 +106,11 @@ def and_edit_links_are_displayed
   expect(page).to have_link 'Edit', href: edit_animon_path(id)
 end
 
-def when_a_user_edits_an_animon
+def when_a_user_is_on_the_edit_form
   visit edit_animon_path(@animon)
+end
+
+def and_a_user_edits_an_animon
   expect(page).to have_select('animon_taxon_id', selected: 'Species: Species common name')
   select 'Subspecies: Subspecies common name', from: 'animon_taxon_id'
   click_button 'commit'
@@ -108,6 +118,10 @@ end
 
 def then_it_is_updated
   expect(page).to have_text 'Animon: Subspecies common name'
+end
+
+def then_there_is_a_link_to_edit_the_taxon
+  expect(page).to have_link('Edit identity', href: edit_taxon_path(@animon.taxon))
 end
 
 def when_a_user_deletes_an_animon
