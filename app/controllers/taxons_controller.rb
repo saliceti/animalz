@@ -83,6 +83,6 @@ class TaxonsController < ApplicationController
   end
 
   def taxon_params
-    params.require(:taxon).permit(:rank, :common_name, :scientific_name, :parent_id)
+    params.require(:taxon).permit(:rank, :common_name, :scientific_name, :parent_id, :wikipedia_page)
   end
 end

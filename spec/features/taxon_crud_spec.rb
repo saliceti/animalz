@@ -27,6 +27,11 @@ feature 'Taxon CRUD' do
     then_the_form_is_prepopulated
     and_a_the_child_taxon_can_be_created
   end
+  scenario 'Wikipedia link' do
+    given_a_taxon_already_exists
+    when_a_user_adds_the_wikipedia_link
+    then_the_wikipedia_link_is_displayed
+  end
 end
 
 def given_a_taxon_already_exists
@@ -118,6 +123,17 @@ def and_a_the_child_taxon_can_be_created
   expect(page).to have_text 'Taxon was successfully created'
   expect(page).to have_text 'Common name: Amphibian'
   expect(page).to have_text 'Scientific classification: Chordata > Amphibia'
+end
+
+def when_a_user_adds_the_wikipedia_link
+  visit(edit_taxon_path(@chordata))
+  fill_in 'Wikipedia page', with: 'https://en.wikipedia.org/wiki/Chordate'
+  click_button('commit')
+end
+
+def then_the_wikipedia_link_is_displayed
+  expect(page).to have_text "Wikipedia: https://en.wikipedia.org/wiki/Chordate"
+  expect(page).to have_link "https://en.wikipedia.org/wiki/Chordate", href: "https://en.wikipedia.org/wiki/Chordate"
 end
 
 private
