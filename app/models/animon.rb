@@ -46,4 +46,12 @@ class Animon < ApplicationRecord
       taxons: { id: species_and_subspecies.map{|t| t.id} }
     )
   end
+
+  def update_points(event)
+    case event
+    when :added_youtube_video
+      increment(:points, 10)
+    end
+    save
+  end
 end

@@ -2,6 +2,7 @@ class YoutubeVideo < ApplicationRecord
   URL_REGEX = /(?:https:\/\/)?(?:youtu.be\/|www.youtube.com\/watch\?v=)([\w-]+)/
 
   before_save :extract_youtube_id
+  after_save :update_points
 
   belongs_to :animon
   validates :link, presence: true
@@ -17,4 +18,7 @@ class YoutubeVideo < ApplicationRecord
     self.youtube_id = link.match(URL_REGEX).captures.first
   end
 
+  def update_points
+    animon.update_points(:added_youtube_video)
+  end
 end
