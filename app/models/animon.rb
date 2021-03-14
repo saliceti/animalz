@@ -48,10 +48,14 @@ class Animon < ApplicationRecord
   end
 
   def update_points(event)
-    case event
-    when :added_youtube_video
-      increment(:points, 10)
+    with_lock do
+      case event
+      when :added_youtube_video
+        increment(:points, 10)
+      end
+
+      save
     end
-    save
   end
+
 end
