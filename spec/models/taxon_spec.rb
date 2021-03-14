@@ -11,6 +11,10 @@ RSpec.describe Taxon, type: :model do
   it { is_expected.to validate_uniqueness_of(:scientific_name) }
   it { is_expected.to have_db_column(:parent_id).of_type(:integer) }
   it { is_expected.to have_many(:children).class_name('Taxon') }
+  it { is_expected.to allow_value('https://en.wikipedia.org/wiki/Chordate').for(:wikipedia_page) }
+  it { is_expected.not_to allow_value('en.wikipedia.org/wiki/Chordate').for(:wikipedia_page) }
+  it { is_expected.not_to allow_value('https://en.wikipedia.org/Chordate').for(:wikipedia_page) }
+  it { is_expected.not_to allow_value('https://another-site.com').for(:wikipedia_page) }
 
   it "is not valid if the rank order is wrong" do
     top = Taxon.new(rank: 'Phylum', common_name: 'Abcd0', scientific_name: 'Abcd0 Defg0')

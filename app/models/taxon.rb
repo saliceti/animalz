@@ -9,6 +9,9 @@ class RankOrderValidator < ActiveModel::Validator
 end
 
 class Taxon < ApplicationRecord
+  RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
+  WIKIPEDIA_URL_REGEX = /https:\/\/en.wikipedia.org\/wiki\/[\w_-]+/
+
   belongs_to :parent, class_name: "Taxon", optional: true
   has_many :children, class_name: "Taxon", foreign_key: "parent_id"
   has_one :animon
@@ -17,8 +20,7 @@ class Taxon < ApplicationRecord
   validates_with RankOrderValidator
   validates :rank, presence: true
   validates :common_name, :scientific_name, presence: true, uniqueness: true
-
-  RANKS = ['Phylum', 'Class', 'Order', 'Family', 'Subfamily', 'Tribe', 'Subtribe', 'Genus', 'Species', 'Subspecies']
+  validates_format_of :wikipedia_page, :with => WIKIPEDIA_URL_REGEX, unless: -> { wikipedia_page.blank? }
 
   def rank_and_common_name
     "#{rank}: #{common_name}"
