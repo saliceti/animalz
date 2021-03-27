@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_14_160235) do
+ActiveRecord::Schema.define(version: 2021_03_27_151057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(version: 2021_03_14_160235) do
     t.index ["taxon_id"], name: "index_animons_on_taxon_id"
   end
 
+  create_table "getty_images", force: :cascade do |t|
+    t.string "embed_code"
+    t.bigint "animon_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["animon_id"], name: "index_getty_images_on_animon_id"
+  end
+
   create_table "taxons", force: :cascade do |t|
     t.string "rank"
     t.string "common_name"
@@ -67,5 +75,6 @@ ActiveRecord::Schema.define(version: 2021_03_14_160235) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "animons", "taxons"
+  add_foreign_key "getty_images", "animons"
   add_foreign_key "youtube_videos", "animons"
 end
