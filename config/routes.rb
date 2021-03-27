@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :taxons
   resources :animons
   resources :youtube_videos
+  resources :getty_images
 
   root 'home#index'
 

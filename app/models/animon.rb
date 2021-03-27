@@ -1,6 +1,7 @@
 class Animon < ApplicationRecord
   belongs_to :taxon
   has_many :youtube_videos
+  has_many :getty_images
   has_one_attached :picture
   accepts_nested_attributes_for :taxon
 

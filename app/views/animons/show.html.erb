@@ -22,6 +22,7 @@
 <p class="mt-4 mx-2">
   <%= link_to 'Edit', edit_animon_path(@animon) %>
   <%= link_to 'Add YouTube video', new_youtube_video_path(animon_id: @animon) %>
+  <%= link_to 'Add Getty image', new_getty_image_path(animon_id: @animon)  %>
 </p>
 
 
@@ -33,6 +34,14 @@
     <% @animon.youtube_videos.each do |video| %>
       <p class="mt-2">
         <iframe width="560" height="315" src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </p>
+    <% end %>
+    <% unless @animon.getty_images.empty? %>
+    <strong>Latest Getty images:</strong>
+    <% end %>
+    <% @animon.getty_images.each do |getty_image| %>
+      <p class="mt-2">
+        <%= getty_image.embed_code.html_safe %>
       </p>
     <% end %>
   </div>
