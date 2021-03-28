@@ -1,7 +1,8 @@
 FactoryBot.define do
 
     factory :youtube_video do
-      link {'https://youtu.be/V06FJGSQ3U'}
+      BASE_LINK = 'https://youtu.be/V06FJGSQ3U'
+      sequence(:link) { |n| "#{BASE_LINK}#{n}" }
       association :animon
     end
 
