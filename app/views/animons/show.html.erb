@@ -28,16 +28,12 @@
 
 <div class="mt-4 mx-2 flex flex-wrap">
   <div class="w-1/2">
-    <% @animon.youtube_videos.each do |video| %>
+    <% @latest_content.each do |content| %>
       <div class="animon_content mt-2">
-        <iframe width="560" height="315" src="<%= embed_link(video.youtube_id) %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <%= html_for_content(content) %>
       </div>
     <% end %>
-    <% @animon.getty_images.each do |getty_image| %>
-      <div class="animon_content mt-2">
-        <%= getty_image.embed_code.html_safe %>
-      </div>
-    <% end %>
+
   </div>
 
   <% if @animon.twitter_handle.present? %>

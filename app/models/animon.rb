@@ -11,6 +11,16 @@ class Animon < ApplicationRecord
     Animon.joins(:taxon).order(:common_name)
   end
 
+  def latest_content(quantity)
+    sample = 50
+
+    @latest_content = []
+    @latest_content.concat youtube_videos.order(:created_at).reverse_order.take sample
+    @latest_content.concat getty_images.order(:created_at).reverse_order.take sample
+    @latest_content = @latest_content.sort_by(&:created_at).reverse
+    @latest_content = @latest_content[0, quantity]
+  end
+
   def self.latest_created(quantity = nil)
     if quantity
       Animon.order(:created_at).reverse_order.take quantity

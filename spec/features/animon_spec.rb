@@ -66,6 +66,15 @@ feature 'Animon CRUD' do
     then_animons_are_listed_in_reverse_chronological_order
     and_the_title_is_latest_animons
   end
+  scenario 'Show mixed content' do
+    given_an_animon
+    and_a_youtube_video
+    and_a_getty_image
+    and_a_youtube_video
+    and_a_getty_image
+    when_the_user_visits_the_animon
+    then_mixed_content_is_listed_in_reverse_chronological_order
+  end
 
   def and_an_animon_is_linked_to_a_taxon
     species = Taxon.where(rank: 'Species').first
@@ -209,6 +218,29 @@ feature 'Animon CRUD' do
 
   def and_the_title_is_latest_animons
     expect(page).to have_css('.animon-title', text: 'Latest animons')
+  end
+
+  def given_an_animon
+    @animon = create(:animon)
+  end
+
+  def and_a_youtube_video
+    create(:youtube_video, animon: @animon)
+  end
+
+  def and_a_getty_image
+    create(:getty_image, animon: @animon)
+  end
+
+  def when_the_user_visits_the_animon
+    visit animon_path(@animon)
+  end
+
+  def then_mixed_content_is_listed_in_reverse_chronological_order
+    byebug
+    expect(page.html.index(@animon.getty_images.second.embed_code)).to be < page.html.index(@animon.youtube_videos.second.youtube_id)
+    expect(page.html.index(@animon.youtube_videos.second.youtube_id)).to be < page.html.index(@animon.getty_images.first.embed_code)
+    expect(page.html.index(@animon.getty_images.first.embed_code)).to be < page.html.index(@animon.youtube_videos.first.youtube_id)
   end
 
 end

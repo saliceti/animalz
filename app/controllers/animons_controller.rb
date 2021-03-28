@@ -1,6 +1,6 @@
 class AnimonsController < ApplicationController
   before_action :set_animon, only: [:show, :edit, :update, :destroy]
-  helper_method :embed_link, :picture
+  helper_method :embed_link, :picture, :html_for_content
 
   def index
     if (params.has_key? :list) && (params[:list] == "latest")
@@ -17,6 +17,8 @@ class AnimonsController < ApplicationController
   end
 
   def show
+    quantity = 100
+    @latest_content = @animon.latest_content(quantity)
   end
 
   def new
@@ -89,5 +91,15 @@ class AnimonsController < ApplicationController
 
   def picture
     helpers.image_tag(url_for(@animon.picture), class: 'mt-4 mx-2 w-64') if @animon.picture.attached?
+  end
+
+  def html_for_content(content_object)
+    case content_object
+    when YoutubeVideo
+      content_html = "<iframe width=\"560\" height=\"315\" src=\"#{ embed_link(content_object.youtube_id) }\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+    when GettyImage
+      content_html = content_object.embed_code
+    end
+    content_html.html_safe
   end
 end
