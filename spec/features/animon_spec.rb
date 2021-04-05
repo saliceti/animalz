@@ -237,7 +237,6 @@ feature 'Animon CRUD' do
   end
 
   def then_mixed_content_is_listed_in_reverse_chronological_order
-    byebug
     expect(page.html.index(@animon.getty_images.second.embed_code)).to be < page.html.index(@animon.youtube_videos.second.youtube_id)
     expect(page.html.index(@animon.youtube_videos.second.youtube_id)).to be < page.html.index(@animon.getty_images.first.embed_code)
     expect(page.html.index(@animon.getty_images.first.embed_code)).to be < page.html.index(@animon.youtube_videos.first.youtube_id)
