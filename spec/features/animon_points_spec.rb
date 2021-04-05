@@ -12,6 +12,11 @@ feature 'Animon Points' do
     when_a_new_video_is_added
     then_points_counter_is_increased
   end
+  scenario 'Add getty image increase' do
+    given_a_new_animon
+    when_a_new_getty_image_is_added
+    then_points_counter_is_increased
+  end
 
   def given_a_new_animon
     @animon = create(:animon)
@@ -34,4 +39,7 @@ feature 'Animon Points' do
     expect(page).to have_text("Points: 10")
   end
 
+  def when_a_new_getty_image_is_added
+    expect{create(:getty_image, animon: @animon)}.to change{@animon.points}.by 10
+  end
 end

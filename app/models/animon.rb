@@ -63,6 +63,8 @@ class Animon < ApplicationRecord
       case event
       when :added_youtube_video
         increment(:points, 10)
+      when :added_getty_image
+        increment(:points, 10)
       end
 
       save
