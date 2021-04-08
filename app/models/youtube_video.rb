@@ -5,7 +5,7 @@ class YoutubeVideo < ApplicationRecord
   after_save :update_points
 
   belongs_to :animon
-  validates :link, presence: true
+  validates :link, presence: true, uniqueness: true
   validates_format_of :link, :with => URL_REGEX
 
   private

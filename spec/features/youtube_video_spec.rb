@@ -13,6 +13,7 @@ feature 'YouTube video' do
     and_adds_a_video
     then_it_is_displayed_on_animon_page
   end
+  # TODO: Test duplicates not allowed
 
   def given_an_animon_exists
     species_taxon = Taxon.find_by rank: 'Species'
