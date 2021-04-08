@@ -3,9 +3,9 @@
 <%= form_with model: @getty_image, local: true, class: "m-2" do |form| %>
   <% if @getty_image.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@video.errors.count, "error") %> prohibited this Getty image from being saved:</h2>
+      <h2><%= pluralize(@getty_image.errors.count, "error") %> prohibited this Getty image from being saved:</h2>
       <ul>
-      <% @video.errors.full_messages.each do |message| %>
+      <% @getty_image.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>

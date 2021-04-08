@@ -1,7 +1,7 @@
 class GettyImage < ApplicationRecord
   belongs_to :animon
 
-  validates :embed_code, presence: true
+  validates :embed_code, presence: true, uniqueness: true
   after_save :update_points
 
   def update_points

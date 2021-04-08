@@ -6,6 +6,16 @@ feature 'Getty image' do
       and_adds_a_getty_image
       then_the_getty_image_is_displayed
     end
+    scenario 'Duplicate' do
+      given_an_animon_exists
+      when_a_user_visits_the_animon
+      and_clicks_on_add_getty_image
+      and_adds_a_getty_image
+      and_clicks_on_add_getty_image
+      and_adds_a_getty_image
+      then_there_is_an_error
+      and_only_one_image_is_added
+    end
 
     def given_an_animon_exists
       @animon = create(:animon)
@@ -29,7 +39,15 @@ feature 'Getty image' do
 
     def then_the_getty_image_is_displayed
       expect(current_path).to eq(animon_path(@animon))
-      getty_image = GettyImage.last
       expect(page).to have_css("a[href='http://www.gettyimages.co.uk/detail/452372-001']")
+    end
+
+    def then_there_is_an_error
+      expect(page).to have_text "Embed code has already been taken"
+    end
+
+    def and_only_one_image_is_added
+      visit animon_path(@animon)
+      expect(page).to have_css("a[href='http://www.gettyimages.co.uk/detail/452372-001']", count: 1)
     end
   end
