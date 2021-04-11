@@ -63,6 +63,8 @@ class Animon < ApplicationRecord
   def update_points(event)
     with_lock do
       case event
+      when :added_animon_link
+        increment(:points, 10)
       when :added_youtube_video
         increment(:points, 10)
       when :added_getty_image

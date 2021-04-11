@@ -7,6 +7,11 @@ feature 'Animon Points' do
     when_it_is_displayed
     then_points_is_default_value
   end
+  scenario 'Add animon link increase' do
+    given_a_new_animon
+    when_a_new_animon_link_is_added
+    then_points_counter_is_increased
+  end
   scenario 'Add video increase' do
     given_a_new_animon
     when_a_new_video_is_added
@@ -41,5 +46,9 @@ feature 'Animon Points' do
 
   def when_a_new_getty_image_is_added
     expect{create(:getty_image, animon: @animon)}.to change{@animon.points}.by 10
+  end
+
+  def when_a_new_animon_link_is_added
+    expect{create(:animon_link, animon: @animon)}.to change{@animon.points}.by 10
   end
 end
