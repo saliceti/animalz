@@ -1,5 +1,6 @@
 class Animon < ApplicationRecord
   belongs_to :taxon
+  has_many :animon_links
   has_many :youtube_videos
   has_many :getty_images
   has_one_attached :picture
@@ -15,6 +16,7 @@ class Animon < ApplicationRecord
     sample = 50
 
     @latest_content = []
+    @latest_content.concat animon_links.order(:created_at).reverse_order.take sample
     @latest_content.concat youtube_videos.order(:created_at).reverse_order.take sample
     @latest_content.concat getty_images.order(:created_at).reverse_order.take sample
     @latest_content = @latest_content.sort_by(&:created_at).reverse

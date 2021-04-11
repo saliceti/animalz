@@ -95,6 +95,8 @@ class AnimonsController < ApplicationController
 
   def html_for_content(content_object)
     case content_object
+    when AnimonLink
+      content_html = "<a href='#{content_object.url}'>#{content_object.title}</a>"
     when YoutubeVideo
       content_html = "<iframe width=\"560\" height=\"315\" src=\"#{ embed_link(content_object.youtube_id) }\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
     when GettyImage
