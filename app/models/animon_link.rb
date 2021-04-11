@@ -1,6 +1,7 @@
 class AnimonLink < ApplicationRecord
   belongs_to :animon
-  validates :url, presence: true
+  validates :title, presence: true, uniqueness: true
+  validates :url, presence: true, uniqueness: true
 
   after_save :update_points
 

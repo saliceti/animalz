@@ -8,6 +8,7 @@ feature 'Animon link' do
     and_adds_a_link
     then_the_link_is_displayed
   end
+  # TODO: Test duplicates not allowed
 
   def given_an_animon_exists
     @animon = create(:animon)
